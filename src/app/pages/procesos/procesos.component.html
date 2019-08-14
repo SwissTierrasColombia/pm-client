@@ -1,0 +1,71 @@
+<div *ngIf="listaprocesos == true">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card" style="height: 100%">
+                <div class="card-header">
+                    <h4 class="text-center">Procesos registrados</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre del procesos</th>
+                                <th>variables</th>
+                                <th>Fecha de creación</th>
+                                <th>Configurar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of procesos; let id = index">
+                                <td>{{ item.process }}</td>
+                                <td>
+                                    <div *ngFor="let va of item.variales">
+                                        <span>{{va}}</span>
+                                    </div>
+                                </td>
+                                <td>{{ item.createdAt }}</td>
+                                <td>
+                                    <i class="material-icons cursor" (click)="ConfigProcess(item._id)">settings</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons cursor">delete</i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-2">
+            <button type="button" class="btn btn-secondary" (click)="viewProcess()">Añadir proceso</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="listaprocesos == false">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="text-center">Creando Proceso</h4>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Nombre del proceso: </span>
+                        </div>
+                        <input class="form-control" id="nomProcessCreate" type="text" name="nomProcessCreate"
+                            [(ngModel)]="nomProcessCreate">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-2">
+            <button type="button" class="btn btn-secondary" (click)="CreateProcess()">Crear proceso</button>
+        </div>
+    </div>
+</div>
