@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./configuracion-proceso.component.scss']
 })
 export class ConfiguracionProcesoComponent implements OnInit {
-  idProcess: any
+  idProcess: any;
+  tab = 1;
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
