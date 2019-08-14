@@ -26,7 +26,12 @@ export class ServicesService {
    */
   public CreateProcess(nombre: string) {
     return this.httpClient.post(this.url + '/api/m/processes', { processName: nombre });
-
+  }
+  /**
+   * GetRolesProcess
+   */
+  public GetRolesProcess(id:string) {
+    return this.httpClient.get<any>(this.url + '/api/m/processes/' + id + '/roles');
   }
 
 }

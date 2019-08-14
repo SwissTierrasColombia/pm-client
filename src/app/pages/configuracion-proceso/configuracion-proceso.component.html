@@ -1,10 +1,14 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12 mt-2">
-            <h2>Configuración del proceso</h2>
-            <br>
-            <!-- Nav tabs -->
+<div class="card mt-2">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-12">
+                <h2>Configuración del proceso</h2>
+                <br>
+                <!-- Nav tabs -->
+            </div>
         </div>
+    </div>
+    <div class="card-body">
         <div class="col-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -30,10 +34,19 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div id="steps" class="tab-pane" [ngClass]="{'active':tab === 1}" role="tabpanel"><br>
-                    <p>Steps</p>
+                    <div class="row">
+                        <div class="col-12">Inicio</div>
+                        <div class="col-2" *ngFor="let item of steps">
+                            {{item.step}}
+                        </div>
+                    </div>
                 </div>
                 <div id="roles" class="tab-pane" [ngClass]="{'active':tab === 2}" role="tabpanel"><br>
-                    <p>Roles</p>
+                    <div class="row">
+                            <div class="col-2" *ngFor="let item of roles">
+                                {{item}}
+                            </div>
+                        </div>
                 </div>
                 <div id="variables" class="tab-pane" [ngClass]="{'active':tab === 3}" role="tabpanel"><br>
                     <p>Variales</p>
