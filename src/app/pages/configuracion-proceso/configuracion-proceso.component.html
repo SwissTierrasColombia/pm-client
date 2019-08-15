@@ -41,7 +41,7 @@
                                 {{item.step.step}}
                             </button>
                             <div class="configStep">
-                                <i class="material-icons cursor" (click)="ConfigStep(item.step._id)">settings</i>
+                                <i class="material-icons cursor" (click)="configStep(item.step._id)">settings</i>
                             </div>
                         </div>
 
@@ -55,13 +55,14 @@
                 </div>
                 <div id="roles" class="tab-pane" [ngClass]="{'active':tab === 2}" role="tabpanel"><br>
                     <div class="row justify-content-start">
-                        <ul class="col-2 m-2 mostrarRoles" *ngFor="let item of roles">
+                        <ul class="col-2 m-2 mostrarRoles" *ngFor="let item of roles; let i= index">
                             <li><i class="material-icons">person</i>
-                                {{item.role}}
+                                {{item.role}} <i class="material-icons cursor m-2"
+                                    (click)="configRol(item._id, i)">settings</i>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" *ngIf="actualizarRol==false">
                         <form action="" method="post">
                             <div class="form-group">
                                 <div class="input-group">
@@ -77,6 +78,26 @@
                             <div class="col-sm-8">
                                 <button (click)="addRolProcess()" type="button" class="btn btn-dark btn-block">Añadir
                                     rol al proceso</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" *ngIf="actualizarRol">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nombre del Rol: </span>
+                                    </div>
+                                    <input class="form-control" id="nomRolCreate" type="text" name="nomRolCreate"
+                                        [(ngModel)]="nomRolCreate">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-sm-8">
+                                <button (click)="updateRolProcess()" type="button"
+                                    class="btn btn-dark btn-block">Actualizar
+                                    rol del proceso</button>
                             </div>
                         </div>
                     </div>

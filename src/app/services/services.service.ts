@@ -48,4 +48,11 @@ export class ServicesService {
   public AddRolProcess(idProcess: string, rol: string) {
     return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/roles', { role: rol });
   }
+  /**
+ * Update role to process
+ */
+  public UpdateRolProcess(idProcess: string, idRol: string, nombrerol: string) {
+    ///api/m/processes/{process}/roles/{role}
+    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/roles/' + idRol, { name: nombrerol });
+  }
 }

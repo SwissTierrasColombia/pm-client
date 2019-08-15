@@ -15,6 +15,8 @@ export class ConfiguracionProcesoComponent implements OnInit {
   roles: any;
   stepsProcess: any;
   nomRolCreate: any;
+  actualizarRol = false;
+  idRolupdate: string;
   constructor(
     private services: ServicesService,
     private router: Router,
@@ -87,25 +89,46 @@ export class ConfiguracionProcesoComponent implements OnInit {
     auxSteps.map(function (variable) {
       self.services.AddStepProcess(self.idProcess, variable.step._id).subscribe(
         data => {
-          self.toastr.success("Haz registrado el step: " + variable.step.step)
+          self.toastr.success("Haz registrado el step: " + variable.step.step);
         },
         error => {
         }
       );
     });
   }
-  ConfigStep(id: string) {
+  configStep(id: string) {
     console.log(id);
+  }
+  configRol(idRol: string, id) {
+    //console.log("idRol: ", idRol, " id: ", id);
+    this.actualizarRol = true;
+    this.nomRolCreate = this.roles[id].role
+    this.idRolupdate = idRol;
+    //this.updateRolProcess(this.idProcess, idRol, this.nomRolCreate);
+  }
+  updateRolProcess() {
+    this.services.UpdateRolProcess(this.idProcess, this.idRolupdate, this.nomRolCreate).subscribe(
+      data => {
+        this.roles = data;
+        this.toastr.success("Haz Actualizado el rol: " + this.nomRolCreate);
+        this.nomRolCreate = "";
+        this.idRolupdate = "";
+        this.actualizarRol = false;
+      },
+      error => {
+        this.toastr.error("No se Actualizo el rol");
+      }
+    );
   }
   addRolProcess() {
     this.services.AddRolProcess(this.idProcess, this.nomRolCreate).subscribe(
       data => {
         this.roles = data;
-        this.toastr.success("Haz registrado el rol: " + this.nomRolCreate)
-        this.nomRolCreate = ""
+        this.toastr.success("Haz registrado el rol: " + this.nomRolCreate);
+        this.nomRolCreate = "";
       },
       error => {
-        this.toastr.error("No se registro el rol")
+        this.toastr.error("No se registro el rol");
       }
     );
   }
