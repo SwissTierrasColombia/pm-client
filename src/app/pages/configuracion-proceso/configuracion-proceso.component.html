@@ -34,19 +34,52 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div id="steps" class="tab-pane" [ngClass]="{'active':tab === 1}" role="tabpanel"><br>
-                    <div class="row">
-                        <div class="col-12">Inicio</div>
-                        <div class="col-2" *ngFor="let item of steps">
-                            {{item.step}}
+                    <div class="row justify-content-center">
+                        <div *ngFor="let item of steps; let i = index" class="col-12 col-md-2 m-2">
+                            <button (click)="addColorstep(i)" type="button" class="btn"
+                                [ngClass]="{'btn-success':item.status == true, 'btn-secondary':!item.status }">
+                                {{item.step.step}}
+                            </button>
+                            <div class="configStep">
+                                <i class="material-icons cursor" (click)="ConfigStep(item.step._id)">settings</i>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center mt-2">
+                        <div class="col-sm-8">
+                            <button (click)="addstepsProcess()" type="button" class="btn btn-dark btn-block">Añadir
+                                steps al proceso</button>
                         </div>
                     </div>
                 </div>
                 <div id="roles" class="tab-pane" [ngClass]="{'active':tab === 2}" role="tabpanel"><br>
-                    <div class="row">
-                            <div class="col-2" *ngFor="let item of roles">
-                                {{item}}
+                    <div class="row justify-content-start">
+                        <ul class="col-2 m-2 mostrarRoles" *ngFor="let item of roles">
+                            <li><i class="material-icons">person</i>
+                                {{item.role}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nombre del Rol: </span>
+                                    </div>
+                                    <input class="form-control" id="nomRolCreate" type="text" name="nomRolCreate"
+                                        [(ngModel)]="nomRolCreate">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-sm-8">
+                                <button (click)="addRolProcess()" type="button" class="btn btn-dark btn-block">Añadir
+                                    rol al proceso</button>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div id="variables" class="tab-pane" [ngClass]="{'active':tab === 3}" role="tabpanel"><br>
                     <p>Variales</p>

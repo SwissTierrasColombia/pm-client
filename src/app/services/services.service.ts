@@ -30,8 +30,22 @@ export class ServicesService {
   /**
    * GetRolesProcess
    */
-  public GetRolesProcess(id:string) {
+  public GetRolesProcess(id: string) {
     return this.httpClient.get<any>(this.url + '/api/m/processes/' + id + '/roles');
   }
-
+  public GetStepsProcess(id: string) {
+    return this.httpClient.get<any>(this.url + '/api/m/processes/' + id + '/steps');
+  }
+  /**
+   * Add step to process
+   */
+  public AddStepProcess(idProcess: string, steps: string) {
+    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/steps', { step: steps });
+  }
+  /**
+   * Add role to process
+   */
+  public AddRolProcess(idProcess: string, rol: string) {
+    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/roles', { role: rol });
+  }
 }
