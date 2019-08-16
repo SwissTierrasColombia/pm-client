@@ -132,5 +132,8 @@ export class ConfiguracionProcesoComponent implements OnInit {
       }
     );
   }
+  volver() {
+    this.router.navigate(['procesos/']);
+  }
 
 }

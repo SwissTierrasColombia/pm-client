@@ -40,6 +40,9 @@ export class ProcesosComponent implements OnInit {
       }
     );
   }
+  volver() {
+    this.listaprocesos = true;
+  }
   ConfigProcess(id: string) {
     this.route.navigate(['procesos/' + id + '/configuracion/']);
   }
