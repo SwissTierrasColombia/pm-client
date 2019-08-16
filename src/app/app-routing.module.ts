@@ -27,7 +27,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'steps',
+    path: 'step/:idStep/configuracion',
     component: ConfiguracionStepsComponent,
     data: {
       title: 'Configuración de pasos'
