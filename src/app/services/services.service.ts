@@ -55,4 +55,20 @@ export class ServicesService {
     ///api/m/processes/{process}/roles/{role}
     return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/roles/' + idRol, { name: nombrerol });
   }
+  /**
+   * Add Field To Step
+   */
+  public AddFieldToStep(idstep: string, formData: any) {
+    let data = [formData]
+    //console.log("data: ", data);
+    return this.httpClient.post(this.url + '/api/m/steps/' + idstep + '/fields', { data });
+  }
+  /**
+   * GetTypeDataStepsProcess
+   */
+  public GetTypeDataStepsProcess() {
+    return this.httpClient.get<any>(this.url + '/api/p/domains/types-data');
+
+  }
+
 }

@@ -96,8 +96,8 @@ export class ConfiguracionProcesoComponent implements OnInit {
       );
     });
   }
-  configStep(id: string) {
-    this.router.navigate(['step/' + id + '/configuracion/']);
+  configStep(idStep: string, nameStep: string) {
+    this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/configuracion/']);
   }
   configRol(idRol: string, id) {
     //console.log("idRol: ", idRol, " id: ", id);

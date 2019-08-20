@@ -1,1 +1,132 @@
-<p>configuracion-steps works!</p>
+<div class="card">
+    <div class="card-header">
+        <div class="row justify-content-center">
+            <div class="col-1">
+                <i class="material-icons cursor m-2" (click)="volver()">backspace</i>
+            </div>
+            <div class="col-10">
+                <h3>Configuración de campos para el paso {{nameStep}}</h3>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-primary fixed_button" type="submit" (click)="createFieldStepProcess()">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form action="" method="post">
+            <div class="form-group">
+                <div id="child" *ngFor="let cat of formStepProcess; let count = index">
+                    <div id="child{{count}}">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 col-sm-1">
+                                    <button class="btn btn-danger" type="submit"
+                                        (click)="deleteFieldStepProcess(count)">-</button>
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Nombre: </span>
+                                        </div>
+                                        <input class="form-control" id="nomProcessCreate" type="text"
+                                            name="nomProcessCreate" [(ngModel)]="cat.field">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-4">
+                                    <div class="input-group" *ngIf="typedata">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Tipo de dato</span>
+                                        </div>
+                                        <select class="form-control" id="typeData{{count}}" name="typeData{{count}}"
+                                            [(ngModel)]="cat.type">
+                                            <option *ngFor="let item of typedata" name="item.typeData"
+                                                [ngValue]="item._id">
+                                                {{item.typeData}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Requerido:</span>
+                                        </div>
+                                        <select class="form-control" id="requerido{{count}}" name="requerido{{count}}"
+                                            [(ngModel)]="cat.isRequired">
+                                            <option name="item" [ngValue]="true">
+                                                SI
+                                            </option>
+                                            <option name="item" [ngValue]="false">
+                                                NO
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="container">
+                                        <h2>Validaciones</h2>
+                                        <p>Por favor configure los permisos para cada rol, si no marca la casilla, se
+                                            entendera que no le dara X permiso a el rol.</p>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Rol</th>
+                                                    <th>Crear</th>
+                                                    <th>Leer</th>
+                                                    <th>Actualizar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let per of cat.permissions; let id=index">
+                                                    <td id="nameRole{{count}}{{id}}">
+                                                        {{per.nameRole}}
+                                                    </td>
+                                                    <td [ngClass]="{'btn-success':per.create == true, 'btn-dark':!per.create }"
+                                                        class="cursor" id="create{{count}}{{id}}"
+                                                        (click)="changeState(count, id, 'create')">
+                                                        {{per.create ? 'activado' : 'desactivado'}}
+                                                    </td>
+                                                    <td [ngClass]="{'btn-success':per.read == true, 'btn-dark':!per.read }"
+                                                        class="cursor" id="read{{count}}{{id}}"
+                                                        (click)="changeState(count, id, 'read')">
+                                                        {{per.read ? 'activado' : 'desactivado'}}
+                                                    </td>
+                                                    <td [ngClass]="{'btn-success':per.update == true, 'btn-dark':!per.update }"
+                                                        class="cursor" id="update{{count}}{{id}}"
+                                                        (click)="changeState(count, id, 'update')">
+                                                        {{per.update ? 'activado' : 'desactivado'}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-5">
+                                    <span class="input-group-text">Descripción</span>
+                                    <div class="">
+                                        <textarea class="form-control" id="textarea-input{{count}}"
+                                            name="textarea-input{{count}}" rows="2"
+                                            placeholder="Contendido de la descripción..."
+                                            [(ngModel)]="cat.description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-12">
+                        <button (click)="registerFieldStep()" type="button" class="btn btn-primary btn-block">Registrar
+                            campos del paso {{nameStep}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{{formStepProcess | json}}
