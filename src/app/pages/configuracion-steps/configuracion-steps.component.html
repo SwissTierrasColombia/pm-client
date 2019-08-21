@@ -16,6 +16,7 @@
         <form action="" method="post">
             <div class="form-group">
                 <div id="child" *ngFor="let cat of formStepProcess; let count = index">
+                    {{cat | json}}
                     <div id="child{{count}}">
                         <div class="form-group">
                             <div class="row">
@@ -26,10 +27,10 @@
                                 <div class="col-12 col-sm-4">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">Nombre: </span>
+                                            <span id="nombre{{count}}" class="input-group-text">Nombre: </span>
                                         </div>
-                                        <input class="form-control" id="nomProcessCreate" type="text"
-                                            name="nomProcessCreate" [(ngModel)]="cat.field">
+                                        <input class="form-control" id="nomProcessCreate{{count}}" type="text"
+                                            name="nomProcessCreate{{count}}" [(ngModel)]="cat.nameField">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
@@ -129,4 +130,3 @@
         </form>
     </div>
 </div>
-{{formStepProcess | json}}

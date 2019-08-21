@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServicesService } from 'src/app/services/services.service';
 import { ToastrService } from 'ngx-toastr';
+import { ManageServicesService } from 'src/app/services/m/manage-services.service';
+import { ParameterizationServicesService } from 'src/app/services/p/parameterization-services.service';
 
 @Component({
   selector: 'app-configuracion-proceso',
@@ -18,7 +19,8 @@ export class ConfiguracionProcesoComponent implements OnInit {
   actualizarRol = false;
   idRolupdate: string;
   constructor(
-    private services: ServicesService,
+    private services: ManageServicesService,
+    private servicesp: ParameterizationServicesService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
@@ -30,7 +32,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.idProcess = response.idProceso
       }
     );
-    this.services.GetSteps().subscribe(
+    this.servicesp.GetSteps().subscribe(
       response => {
         for (let i in response) {
           this.steps.push({

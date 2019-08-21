@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicesService } from 'src/app/services/services.service';
+
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ManageServicesService } from 'src/app/services/m/manage-services.service';
 @Component({
   selector: 'app-procesos',
   templateUrl: './procesos.component.html',
@@ -11,7 +12,11 @@ export class ProcesosComponent implements OnInit {
   listaprocesos = true;
   procesos: Array<{}>;
   nomProcessCreate: string;
-  constructor(private services: ServicesService, private toastr: ToastrService, private route: Router) {
+  constructor(
+    private services: ManageServicesService,
+    private toastr: ToastrService,
+    private route: Router
+  ) {
     this.procesos = []
   }
 
