@@ -108,6 +108,17 @@ export class ConfiguracionProcesoComponent implements OnInit {
     this.idRolupdate = idRol;
     //this.updateRolProcess(this.idProcess, idRol, this.nomRolCreate);
   }
+  deleteRol(idRol: string, id) {
+
+    this.services.RemoveRoleFromProcess(this.idProcess, idRol).subscribe(
+      response => {
+        this.toastr.success("Haz Eliminado un rol");
+        this.roles.splice(id, 1)
+      }, error => {
+        this.toastr.error("No se Elimino el rol");
+      }
+    )
+  }
   updateRolProcess() {
     this.services.UpdateRolProcess(this.idProcess, this.idRolupdate, this.nomRolCreate).subscribe(
       data => {

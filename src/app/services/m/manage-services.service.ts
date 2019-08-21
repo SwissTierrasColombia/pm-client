@@ -40,7 +40,12 @@ export class ManageServicesService {
   public UpdateRolProcess(idProcess: string, idRol: string, nombrerol: string) {
     return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/roles/' + idRol, { name: nombrerol });
   }
-
+  /**
+   * Remove Role From Process
+   */
+  public RemoveRoleFromProcess(idprocess: string, idrule: string) {
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idprocess + '/roles/' + idrule)
+  }
   /**
    * Add step to process
    */

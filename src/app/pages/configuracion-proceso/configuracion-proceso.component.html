@@ -37,13 +37,13 @@
                 <div id="steps" class="tab-pane" [ngClass]="{'active':tab === 1}" role="tabpanel"><br>
                     <div class="row justify-content-center">
                         <div *ngFor="let item of steps; let i = index" class="col-12 col-md-2 m-2">
+                            <i class="material-icons cursor"
+                                (click)="configStep(item.step._id, item.step.step)">settings</i>
                             <button (click)="addColorstep(i)" type="button" class="btn"
                                 [ngClass]="{'btn-success':item.status == true, 'btn-secondary':!item.status }">
                                 {{item.step.step}}
                             </button>
-                            <div class="configStep">
-                                <i class="material-icons cursor" (click)="configStep(item.step._id, item.step.step)">settings</i>
-                            </div>
+                            <i class="material-icons cursor">delete</i>
                         </div>
 
                     </div>
@@ -55,11 +55,13 @@
                     </div>
                 </div>
                 <div id="roles" class="tab-pane" [ngClass]="{'active':tab === 2}" role="tabpanel"><br>
-                    <div class="row justify-content-start">
-                        <ul class="col-2 m-2 mostrarRoles" *ngFor="let item of roles; let i= index">
-                            <li><i class="material-icons">person</i>
-                                {{item.role}} <i class="material-icons cursor m-2"
-                                    (click)="configRol(item._id, i)">settings</i>
+                    <div class="row justify-content-start" *ngIf="roles">
+                        <ul id="ul-{{i}}" class="col-2 m-2 mostrarRoles" *ngFor="let item of roles; let i= index">
+                            <li id="li-{{i}}">
+                                <i class="material-icons">person</i>
+                                {{item.role}}
+                                <i class="material-icons cursor m-2" (click)="configRol(item._id, i)">settings</i>
+                                <i class="material-icons cursor m-2" (click)="deleteRol(item._id, i)">delete</i>
                             </li>
                         </ul>
                     </div>
