@@ -17,16 +17,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of procesos; let id = index">
-                                <td>{{ item.process }}</td>
+                            <tr *ngFor="let item of process; let id = index">
+                                <td>{{ item.process.process }}</td>
                                 <td>
-                                    <div *ngFor="let va of item.variales">
+                                    <div *ngFor="let va of item.process.variales">
                                         <span>{{va}}</span>
                                     </div>
                                 </td>
-                                <td>{{ item.createdAt }}</td>
+                                <td>{{ item.process.createdAt }}</td>
                                 <td>
-                                    <i class="material-icons cursor" (click)="ConfigProcess(item._id)">settings</i>
+                                    <i class="material-icons cursor"
+                                        (click)="ConfigProcess(item.process._id)">settings</i>
                                 </td>
                                 <td>
                                     <i class="material-icons cursor">delete</i>
