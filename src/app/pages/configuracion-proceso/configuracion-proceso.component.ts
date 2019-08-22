@@ -25,7 +25,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
   nomVariableCreate: string;
   valorVariableCreate: string;
   idVariableupdate: string;
-
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
@@ -170,8 +169,15 @@ export class ConfiguracionProcesoComponent implements OnInit {
       );
     });
   }
-  configStep(idStep: string, nameStep: string) {
-    this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/configuracion/']);
+  configStep(idStep: string, nameStep: string, id) {
+    console.log(this.stepsProcess[id]);
+    if (this.steps[id].status) {
+      this.addstepsProcess();
+      this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/configuracion/']);
+    } else {
+      this.toastr.info("Al parecer no haz agregado este paso al proceso", "Por favor agregalo primero.")
+    }
+
   }
   deleteStep(idstepOne: string, idColor: number) {
     let id = idstepOne

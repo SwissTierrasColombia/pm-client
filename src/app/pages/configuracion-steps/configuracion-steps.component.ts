@@ -55,17 +55,19 @@ export class ConfiguracionStepsComponent implements OnInit {
           this.idStepSelect = this.allstepsSelect.find((item) => {
             return item.typeStep == this.idStep;
           })
-          this.services.GetFieldsFromStep(this.idStepSelect._id).subscribe(
-            response => {
-              this.formStepProcess = response;
-              for (let i in this.formStepProcess) {
-                this.formStepProcess[i].type = this.formStepProcess[i].typeData._id;
+          if (this.idStepSelect) {
+            this.services.GetFieldsFromStep(this.idStepSelect._id).subscribe(
+              response => {
+                this.formStepProcess = response;
+                for (let i in this.formStepProcess) {
+                  this.formStepProcess[i].type = this.formStepProcess[i].typeData._id;
+                }
+                resolve()
+              }, error => {
+                console.log(error);
               }
-              resolve()
-            }, error => {
-              console.log(error);
-            }
-          )
+            )
+          }
           //console.log("this.idStepSelect: ", this.idStepSelect);
 
         }, error => {
