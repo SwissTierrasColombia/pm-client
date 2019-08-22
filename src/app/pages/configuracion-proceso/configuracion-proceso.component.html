@@ -21,7 +21,7 @@
                 <li class="nav-item">
                     <a class="nav-link active cursor" data-toggle="tab" [ngClass]="{'active':tab === 2}" role="tab"
                         (click)="tab=2" aria-controls="roles">
-                        <i class="material-icons">build</i>Roles
+                        <i class="material-icons">person_add</i>Roles
                     </a>
                 </li>
                 <li class="nav-item">
@@ -59,7 +59,7 @@
                             <li id="li-{{i}}">
                                 <i class="material-icons">person</i>
                                 {{item.role}}
-                                <i class="material-icons cursor m-2" (click)="configRol(item._id, i)">settings</i>
+                                <i class="material-icons cursor m-2" (click)="configRol(item._id, i)">update</i>
                                 <i class="material-icons cursor m-2" (click)="deleteRol(item._id, i)">delete</i>
                             </li>
                         </ul>
@@ -105,7 +105,80 @@
                     </div>
                 </div>
                 <div id="variables" class="tab-pane" [ngClass]="{'active':tab === 3}" role="tabpanel"><br>
-                    <p>Variales</p>
+                    <div class="row justify-content-start" *ngIf="variables">
+                        <ul id="ul-{{i}}" class="col-2 m-2 mostrarRoles" *ngFor="let item of variables; let i= index">
+                            <li id="li-{{i}}">
+                                <i class="material-icons">details</i>
+                                {{item.variable}} : {{item.value}}
+                                <i class="material-icons cursor m-2" (click)="configVariable(item._id, i)">update</i>
+                                <i class="material-icons cursor m-2" (click)="deleteVariable(item._id, i)">delete</i>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12" *ngIf="actualizarVariable==false">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nombre de la Variable: </span>
+                                            </div>
+                                            <input class="form-control" id="nomVariableCreate" type="text"
+                                                name="nomVariableCreate" [(ngModel)]="nomVariableCreate">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Valor de la Variable: </span>
+                                            </div>
+                                            <input class="form-control" id="valorVariableCreate" type="text"
+                                                name="valorVariableCreate" [(ngModel)]="valorVariableCreate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-sm-8">
+                                <button (click)="addVariableProcess()" type="button"
+                                    class="btn btn-dark btn-block">Añadir
+                                    Variable al proceso</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" *ngIf="actualizarVariable">
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Nombre de la Variable: </span>
+                                        </div>
+                                        <input class="form-control" id="nomVariableCreate" type="text"
+                                            name="nomVariableCreate" [(ngModel)]="nomVariableCreate">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Valor de la Variable: </span>
+                                        </div>
+                                        <input class="form-control" id="valorVariableCreate" type="text"
+                                            name="valorVariableCreate" [(ngModel)]="valorVariableCreate">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-sm-8">
+                                <button (click)="updateVariableProcess()" type="button"
+                                    class="btn btn-dark btn-block">Actualizar
+                                    variable del proceso</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

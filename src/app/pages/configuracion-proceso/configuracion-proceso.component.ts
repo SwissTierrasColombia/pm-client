@@ -20,6 +20,11 @@ export class ConfiguracionProcesoComponent implements OnInit {
   idRolupdate: string;
   allstepsSelect: any;
   idStepSelect: any;
+  actualizarVariable = false;
+  variables: any;
+  nomVariableCreate: string;
+  valorVariableCreate: string;
+  idVariableupdate: string;
 
   constructor(
     private services: ManageServicesService,
@@ -75,6 +80,71 @@ export class ConfiguracionProcesoComponent implements OnInit {
       error => {
         console.log("error: ", error);
       });
+    this.services.GetVariablesFromProcess(this.idProcess).subscribe(
+      response => {
+        this.variables = response;
+      }, error => {
+        console.log("error Get Variables: ", error);
+
+      }
+    )
+  }
+
+  addVariableProcess() {
+    let data = {
+      "process": this.idProcess,
+      "variable": this.nomVariableCreate,
+      "value": this.valorVariableCreate
+    }
+    this.services.AddVariableToProcess(this.idProcess, data).subscribe(
+      Response => {
+        this.variables = Response;
+        this.toastr.success("Se a registrado la variable al proceso.")
+      },
+      error => {
+        this.toastr.error("No se pudo añadir la variable al proceso.")
+      }
+    )
+    this.nomVariableCreate = '';
+    this.valorVariableCreate = '';
+  }
+
+  configVariable(idvariable: string, id: number) {
+    this.actualizarVariable = true;
+    this.nomVariableCreate = this.variables[id].variable;
+    this.valorVariableCreate = this.variables[id].value;
+    this.idVariableupdate = idvariable;
+  }
+  updateVariableProcess() {
+    let data = {
+      "process": this.idProcess,
+      "variable": this.idVariableupdate,
+      "name": this.nomVariableCreate,
+      "value": this.valorVariableCreate
+    }
+    this.services.UpdateVariablesFromProcess(this.idProcess, this.idVariableupdate, data).subscribe(
+      data => {
+        this.variables = data;
+        this.toastr.success("Haz Actualizado la variable: " + this.nomVariableCreate);
+        this.nomVariableCreate = "";
+        this.idVariableupdate = "";
+        this.valorVariableCreate = "";
+        this.actualizarVariable = false;
+      },
+      error => {
+        this.toastr.error("No se Actualizo el rol");
+      }
+    );
+  }
+  deleteVariable(idVariable: string, id: number) {
+    this.services.RemoveVariableFromProcess(this.idProcess, idVariable).subscribe(
+      response => {
+        this.toastr.success("Haz Eliminado una variable");
+        this.variables.splice(id, 1)
+      }, error => {
+        this.toastr.error("No se Elimino la variable");
+      }
+    )
   }
   clone(obj: Object) {
     return JSON.parse(JSON.stringify(obj))
@@ -127,7 +197,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
       });
     this.idStepSelect = '';
   }
-  configRol(idRol: string, id) {
+  configRol(idRol: string, id: number) {
     //console.log("idRol: ", idRol, " id: ", id);
     this.actualizarRol = true;
     this.nomRolCreate = this.roles[id].role

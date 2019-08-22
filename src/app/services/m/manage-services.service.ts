@@ -81,8 +81,26 @@ export class ManageServicesService {
   /**
    * Add variable to process
    */
-  public AddVariableToProcess(idProcess: string) {
-    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/variables', {})
+  public AddVariableToProcess(idProcess: string, data: any) {
+    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/variables', data)
+  }
+  /**
+   * Get Variables From Process
+   */
+  public GetVariablesFromProcess(idProcess: string) {
+    return this.httpClient.get<any>(this.url + '/api/m/processes/' + idProcess + '/variables');
+  }
+  /**
+   * Update Variables From Process
+   */
+  public UpdateVariablesFromProcess(idProcess: string, idVariable: string, data: any) {
+    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/variables/' + idVariable, data)
+  }
+  /**
+   * Remove Variable From Process
+   */
+  public RemoveVariableFromProcess(idProcess: string, idVariable: string) {
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/variables/' + idVariable);
   }
 
   // FIN M/Processes
