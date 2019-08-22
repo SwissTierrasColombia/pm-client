@@ -27,8 +27,8 @@ export class ManageServicesService {
   /**
    * Update a Process
    */
-  public UpdateaProcess() {
-
+  public UpdateaProcess(ipProcess: string, data: any) {
+    return this.httpClient.put(this.url + '/api/m/processes/' + ipProcess, data)
   }
   /**
    * Remove a Process

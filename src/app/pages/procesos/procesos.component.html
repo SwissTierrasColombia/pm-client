@@ -1,4 +1,4 @@
-<div *ngIf="listaprocesos == true">
+<div *ngIf="listaprocesos == true && updateprocess == false">
     <div class="row">
         <div class="col-sm">
             <div class="card" style="height: 100%">
@@ -18,7 +18,10 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of process; let id = index">
-                                <td>{{ item.process.process }}</td>
+                                <td><i class="material-icons cursor"
+                                        (click)="viewupdateProcess(item.process.process,id)">update</i>
+                                    {{ item.process.process }}
+                                </td>
                                 <td>
                                     <div *ngFor="let va of item.process.variales">
                                         <span>{{va}}</span>
@@ -51,7 +54,7 @@
         <div class="card-header">
             <div class="row">
                 <i class="material-icons cursor m-2" (click)="volver()">backspace</i>
-                <div class="col-10">
+                <div class="col-11">
                     <h4 class="text-center">Creando Proceso</h4>
                 </div>
             </div>
@@ -73,6 +76,36 @@
     <div class="row">
         <div class="col mt-2">
             <button type="button" class="btn btn-secondary" (click)="CreateProcess()">Crear proceso</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="updateprocess">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <i class="material-icons cursor m-2" (click)="volver()">backspace</i>
+                <div class="col-11">
+                    <h4 class="text-center">Actualizando el proceso {{nomProcessCreate}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Nombre del proceso: </span>
+                        </div>
+                        <input class="form-control" id="nomProcessCreate" type="text" name="nomProcessCreate"
+                            [(ngModel)]="nomProcessCreate">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-2">
+            <button type="button" class="btn btn-secondary" (click)="updateProcess()">Actualizar proceso</button>
         </div>
     </div>
 </div>

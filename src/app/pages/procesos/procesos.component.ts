@@ -10,8 +10,11 @@ import { ManageServicesService } from 'src/app/services/m/manage-services.servic
 })
 export class ProcesosComponent implements OnInit {
   listaprocesos = true;
+  updateprocess = false;
   process = []
   nomProcessCreate: string;
+  ipProcessUpdate: string;
+  dataUpdate: any;
   constructor(
     private services: ManageServicesService,
     private toastr: ToastrService,
@@ -51,10 +54,31 @@ export class ProcesosComponent implements OnInit {
   }
   volver() {
     this.listaprocesos = true;
+    this.updateprocess = false;
   }
   ConfigProcess(id: string) {
     this.route.navigate(['procesos/' + id + '/configuracion/']);
   }
+  viewupdateProcess(nomProcess: string, id: number) {
+    this.updateprocess = true;
+    this.nomProcessCreate = nomProcess;
+    this.ipProcessUpdate = this.process[id].process._id;
+  }
+  updateProcess() {
+    this.dataUpdate = {
+      "process": this.ipProcessUpdate,
+      "processName": this.nomProcessCreate
+    }
+    this.services.UpdateaProcess(this.ipProcessUpdate, this.dataUpdate).subscribe(
+      response => {
+        setTimeout(function () { window.location.reload(); }, 1000);
+        this.toastr.success("Haz Actualizado un proceso")
+      }, error => {
+        this.toastr.error("Se a actualizado un proceso")
+      }
+    )
+  }
+
   deleteProcess(idProcess: string, id) {
     this.services.RemoveaProcess(idProcess).subscribe(
       paramName => {
