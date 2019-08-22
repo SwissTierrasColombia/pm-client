@@ -18,6 +18,9 @@ export class ConfiguracionProcesoComponent implements OnInit {
   nomRolCreate: any;
   actualizarRol = false;
   idRolupdate: string;
+  allstepsSelect: any;
+  idStepSelect: any;
+
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
@@ -40,13 +43,12 @@ export class ConfiguracionProcesoComponent implements OnInit {
             "status": false
           })
         }
-        //this.steps = response;
-        //console.log("this.steps: ", this.steps);
       },
       error => {
         console.log("error: ", error);
 
       }
+
     );
     this.services.GetRolesProcess(this.idProcess).subscribe(
       response => {
@@ -100,6 +102,30 @@ export class ConfiguracionProcesoComponent implements OnInit {
   }
   configStep(idStep: string, nameStep: string) {
     this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/configuracion/']);
+  }
+  deleteStep(idstepOne: string, idColor: number) {
+    let id = idstepOne
+    this.steps[idColor].status = false
+    this.services.GetStepsProcess(this.idProcess).subscribe(
+      response => {
+        this.allstepsSelect = response;
+        this.idStepSelect = this.allstepsSelect.find((item) => {
+          return item.typeStep == id;
+        })
+        if (this.idStepSelect) {
+          this.services.RemoveStepToProcess(this.idProcess, this.idStepSelect._id).subscribe(
+            response => {
+              this.toastr.success("Se a eliminado un Step");
+            },
+            error => {
+              this.toastr.error("No se a podido eliminar el step");
+            }
+          );
+        } else {
+          this.toastr.show("Probablemente no a guardado ese Step, No se puede eliminar")
+        }
+      });
+    this.idStepSelect = '';
   }
   configRol(idRol: string, id) {
     //console.log("idRol: ", idRol, " id: ", id);

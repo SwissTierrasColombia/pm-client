@@ -37,15 +37,14 @@
                 <div id="steps" class="tab-pane" [ngClass]="{'active':tab === 1}" role="tabpanel"><br>
                     <div class="row justify-content-center">
                         <div *ngFor="let item of steps; let i = index" class="col-12 col-md-2 m-2">
-                            <i class="material-icons cursor"
-                                (click)="configStep(item.step._id, item.step.step)">settings</i>
-                            <button (click)="addColorstep(i)" type="button" class="btn"
+                            <div (click)="addColorstep(i)"
                                 [ngClass]="{'btn-success':item.status == true, 'btn-secondary':!item.status }">
                                 {{item.step.step}}
-                            </button>
-                            <i class="material-icons cursor">delete</i>
+                            </div>
+                            <i class="material-icons cursor"
+                                (click)="configStep(item.step._id, item.step.step)">settings</i>
+                            <i class="material-icons cursor" (click)="deleteStep(item.step._id, i)">delete</i>
                         </div>
-
                     </div>
                     <div class="row justify-content-center mt-2">
                         <div class="col-sm-8">

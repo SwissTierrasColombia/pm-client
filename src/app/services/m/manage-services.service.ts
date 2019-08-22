@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,22 @@ export class ManageServicesService {
   public GetProcesos() {
     return this.httpClient.get<any>(this.url + '/api/m/processes');
   }
+
+  /**
+   * Update a Process
+   */
+  public UpdateaProcess() {
+
+  }
+  /**
+   * Remove a Process
+   */
+  public RemoveaProcess() {
+
+  }
   /**
   * Add role to process
-  */
+ */
   public AddRolProcess(idProcess: string, rol: string) {
     return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/roles', { role: rol });
   }
@@ -58,7 +72,12 @@ export class ManageServicesService {
   public GetStepsProcess(id: string) {
     return this.httpClient.get<any>(this.url + '/api/m/processes/' + id + '/steps');
   }
-
+  /**
+   * Remove Step To Process
+   */
+  public RemoveStepToProcess(idProcess: string, stepsSelect: string) {
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/steps/' + stepsSelect)
+  }
   /**
    * Add variable to process
    */
@@ -107,9 +126,9 @@ export class ManageServicesService {
     return this.httpClient.post(this.url + '/api/m/steps/' + idStep + '/rules', {})
   }
   /**
-   * Remove To Step
+   * Remove rule to step
    */
-  public RemoveToStep(idStep: string, idRule: string) {
+  public RemoveRuleToStep(idStep: string, idRule: string) {
     return this.httpClient.delete(this.url + '/api/m/steps/' + idStep + '/rules/' + idRule)
   }
   //FIN M/Steps

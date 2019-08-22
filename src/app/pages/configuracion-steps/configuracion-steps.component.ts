@@ -38,55 +38,6 @@ export class ConfiguracionStepsComponent implements OnInit {
         //console.log("route response", response);
       }
     );
-
-    /*     this.services.GetStepsProcess(this.idProcess).subscribe(
-          response => {
-            this.allstepsSelect = response;
-            this.idStepSelect = this.allstepsSelect.find((item) => {
-              return item.typeStep == this.idStep;
-            })
-            this.services.GetFieldsFromStep(this.idStepSelect._id).subscribe(
-              response => {
-                this.formStepProcess = response;
-                for (let i in this.formStepProcess) {
-                  this.formStepProcess[i].type = this.formStepProcess[i].typeData._id;
-                }
-              }, error => {
-                console.log(error);
-    
-              }
-            )
-            //console.log("this.idStepSelect: ", this.idStepSelect);
-    
-          }, error => {
-            console.log("error obteniendo los pasos de procesos: ", error);
-    
-          }
-        ) */
-    //console.log("this.idStep", this.idStep);
-    //console.log("this.idProceso", this.idProcess);
-    /*     this.services.GetRolesProcess(this.idProcess).subscribe(
-          response => {
-            //console.log("response", response);
-            this.roles = response;
-            for (let i in this.roles) {
-              //console.log(this.roles[i]);
-              this.permissions.push({
-                "role": this.roles[i]._id,
-                "nameRole": this.roles[i].role,
-                "create": false,
-                "read": false,
-                "update": false,
-    
-              })
-            }
-          },
-          error => {
-            console.log("error:", error);
-    
-          }
-        ); */
-    //console.log(this.permissions);
     this.servicesp.GetTypeDataStepsProcess().subscribe(
       response => {
         //console.log("response", response);
@@ -113,7 +64,6 @@ export class ConfiguracionStepsComponent implements OnInit {
               resolve()
             }, error => {
               console.log(error);
-
             }
           )
           //console.log("this.idStepSelect: ", this.idStepSelect);
@@ -168,10 +118,11 @@ export class ConfiguracionStepsComponent implements OnInit {
     //console.log(this.formStepProcess[id]);
     this.services.RemoveFieldFromStep(this.idStepSelect._id, this.formStepProcess[id]._id).subscribe(
       response => {
-        console.log("Elimine un Campo de un paso");
+        this.toastr.success("Haz eliminado un campo")
         this.formStepProcess.splice(id, 1)
       },
       error => {
+        this.toastr.success("No se elimino el campo")
         console.log("No se elimino el campo: ", error);
 
       }
@@ -182,34 +133,43 @@ export class ConfiguracionStepsComponent implements OnInit {
   }
   registerFieldStep() {
     let dataForm = this.clone(this.formStepProcess)
-    //console.log(JSON.stringify(dataForm));
+    let promise = [];
     for (let i in dataForm) {
       if (!dataForm[i].hasOwnProperty('_id')) {
-        this.services.AddFieldToStep(this.idStepSelect._id, dataForm[i]).subscribe(
-          response => {
-            console.log("Good: ", response);
+        let AddFieldToStepPromise = new Promise((resolve, reject) => {
+          this.services.AddFieldToStep(this.idStepSelect._id, dataForm[i]).subscribe(
+            response => {
+              resolve()
+            },
+            error => {
+              //console.log("error AddFieldToStep: ", error);
 
-          },
-          error => {
-            console.log("error AddFieldToStep: ", error);
 
-
-          }
-        )
+            }
+          )
+        });
+        promise.push(AddFieldToStepPromise)
       } else {
-        this.services.UpdateFieldFromStep(this.idStepSelect._id, dataForm[i]._id, dataForm[i]).subscribe(
-          response => {
-            console.log("Good Update: ", response);
+        let UpdateFieldToStepPromise = new Promise((resolve, reject) => {
+          this.services.UpdateFieldFromStep(this.idStepSelect._id, dataForm[i]._id, dataForm[i]).subscribe(
+            response => {
+              //console.log("Good Update: ", response);
+              resolve()
+            },
+            error => {
+              console.log("error UpdateFieldToStep: ", error);
 
-          },
-          error => {
-            console.log("error UpdateFieldToStep: ", error);
-
-          }
-        )
+            }
+          )
+        });
+        promise.push(UpdateFieldToStepPromise)
       }
-
     }
+    Promise.all(promise).then(values => {
+      setTimeout(function () { window.location.reload(); }, 1000);
+      this.toastr.success("Información guardada.");
+    });
+
   }
   volver() {
     this.router.navigate(['procesos/' + this.idProcess + '/configuracion/']);
