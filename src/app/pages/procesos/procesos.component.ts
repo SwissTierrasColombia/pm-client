@@ -26,7 +26,7 @@ export class ProcesosComponent implements OnInit {
             'process': response[i]
           })
         }
-        console.log("response get this.procesos: ", this.process);
+        //console.log("response get this.procesos: ", this.process);
       },
       error => {
         console.log("Error al obtener los procesos", error);
@@ -55,8 +55,14 @@ export class ProcesosComponent implements OnInit {
   ConfigProcess(id: string) {
     this.route.navigate(['procesos/' + id + '/configuracion/']);
   }
-  deleteProcess(id: string) {
-
+  deleteProcess(idProcess: string, id) {
+    this.services.RemoveaProcess(idProcess).subscribe(
+      paramName => {
+        this.toastr.success("Se a eliminado un proceso")
+        this.process.splice(id, 1);
+      }, error => {
+        this.toastr.error("Error al eliminar un proceso")
+      });
   }
 
 }

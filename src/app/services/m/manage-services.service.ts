@@ -33,8 +33,8 @@ export class ManageServicesService {
   /**
    * Remove a Process
    */
-  public RemoveaProcess() {
-
+  public RemoveaProcess(idProcess: string) {
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess)
   }
   /**
   * Add role to process

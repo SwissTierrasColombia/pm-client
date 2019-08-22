@@ -30,7 +30,8 @@
                                         (click)="ConfigProcess(item.process._id)">settings</i>
                                 </td>
                                 <td>
-                                    <i class="material-icons cursor">delete</i>
+                                    <i class="material-icons cursor"
+                                        (click)="deleteProcess(item.process._id, id)">delete</i>
                                 </td>
                             </tr>
                         </tbody>
