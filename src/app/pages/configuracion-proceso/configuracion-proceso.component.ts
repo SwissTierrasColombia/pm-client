@@ -179,6 +179,16 @@ export class ConfiguracionProcesoComponent implements OnInit {
     }
 
   }
+  configRules(idStep: string, nameStep: string, id) {
+    console.log(this.stepsProcess[id]);
+    if (this.steps[id].status) {
+      this.addstepsProcess();
+      this.router.navigate(['step/' + idStep + '/' + nameStep + '/config/rules']);
+    } else {
+      this.toastr.info("Al parecer no haz agregado este paso al proceso", "Por favor agregalo primero.")
+    }
+
+  }
   deleteStep(idstepOne: string, idColor: number) {
     let id = idstepOne
     this.steps[idColor].status = false

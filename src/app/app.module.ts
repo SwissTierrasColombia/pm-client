@@ -13,6 +13,7 @@ import { P500Component } from './pages/error/500.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { RulesComponent } from './pages/configuracion-steps/rules/rules.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
     ConfiguracionProcesoComponent,
     ConfiguracionStepsComponent,
     P404Component,
-    P500Component
+    P500Component,
+    RulesComponent
   ],
   imports: [
     BrowserModule,

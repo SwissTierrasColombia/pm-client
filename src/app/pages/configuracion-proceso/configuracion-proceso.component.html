@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="row">
             <i class="material-icons cursor m-2" (click)="volver()">backspace</i>
-            <div class="col-10">
+            <div class="col-11">
                 <h2>Configuración del proceso</h2>
                 <br>
                 <!-- Nav tabs -->
@@ -41,9 +41,11 @@
                                 [ngClass]="{'btn-success':item.status == true, 'btn-secondary':!item.status }">
                                 {{item.step.step}}
                             </div>
-                            <i class="material-icons cursor"
+                            <i class="material-icons cursor m-1"
+                                (click)="configRules(item.step._id, item.step.step, i)">list_alt</i>
+                            <i class="material-icons cursor m-1"
                                 (click)="configStep(item.step._id, item.step.step, i)">settings</i>
-                            <i class="material-icons cursor" (click)="deleteStep(item.step._id, i)">delete</i>
+                            <i class="material-icons cursor m-1" (click)="deleteStep(item.step._id, i)">delete</i>
                         </div>
                     </div>
                     <div class="row justify-content-center mt-2">

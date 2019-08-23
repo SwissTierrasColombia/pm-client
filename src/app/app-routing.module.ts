@@ -5,6 +5,7 @@ import { P500Component } from './pages/error/500.component';
 import { ProcesosComponent } from './pages/procesos/procesos.component';
 import { ConfiguracionProcesoComponent } from './pages/configuracion-proceso/configuracion-proceso.component';
 import { ConfiguracionStepsComponent } from './pages/configuracion-steps/configuracion-steps.component';
+import { RulesComponent } from './pages/configuracion-steps/rules/rules.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,13 @@ const routes: Routes = [
     component: ConfiguracionStepsComponent,
     data: {
       title: 'Configuración de pasos'
+    }
+  },
+  {
+    path: 'step/:idStepSelect/:nameStep/config/rules',
+    component: RulesComponent,
+    data: {
+      title: 'Configuración de reglas'
     }
   },
   {
