@@ -183,7 +183,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
     console.log(this.stepsProcess[id]);
     if (this.steps[id].status) {
       this.addstepsProcess();
-      this.router.navigate(['step/' + idStep + '/' + nameStep + '/config/rules']);
+      this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/config/rules']);
     } else {
       this.toastr.info("Al parecer no haz agregado este paso al proceso", "Por favor agregalo primero.")
     }

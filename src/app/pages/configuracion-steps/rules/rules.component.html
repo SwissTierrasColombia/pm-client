@@ -1,1 +1,49 @@
-<p>rules works!</p>
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title"> Configuración reglas de: {{nameStep}}</h4>
+    </div>
+    <div class="card-body">
+        <div class="row" *ngFor="let form of formRules; let idOut = index;">
+            <div class="col-12 col-sm-6">
+                <div *ngFor="let item of form.conditions; let idInt = index;">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Campos</span>
+                        </div>
+                        <select class="form-control" id="typeData{{idOut}}{{idInt}}" name="typeData{{idOut}}{{idInt}}"
+                            [(ngModel)]="item.field">
+                            <option *ngFor="let item of allFieldStep" name="item.typeData" [ngValue]="item._id">
+                                {{item.nameField}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Operadores</span>
+                        </div>
+                        <select class="form-control" id="operator{{idOut}}{{idInt}}" name="operator{{idOut}}{{idInt}}"
+                            [(ngModel)]="item.operator">
+                            <option *ngFor="let item of typeOperaators" name="item.operator" [ngValue]="item._id">
+                                {{item.operator}} : {{item.symbol}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Valor: </span>
+                        </div>
+                        <input class="form-control" id="valor{{idOut}}{{idInt}}" type="text"
+                            name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+
+            </div>
+        </div>
+    </div>
+
+    <!--     <div class="card-footer text-muted">
+        Footer
+    </div> -->
+</div>

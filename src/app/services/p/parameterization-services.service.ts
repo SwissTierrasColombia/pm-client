@@ -8,17 +8,33 @@ import { environment } from 'src/environments/environment';
 export class ParameterizationServicesService {
   url: string = environment.back_mongo;
   constructor(private httpClient: HttpClient) { }
+  //P/Steps
   /**
 * GetSteps
 */
   public GetSteps() {
     return this.httpClient.get<any>(this.url + '/api/p/steps');
   }
+  //fin P/Steps
+
+  //P/Domains
   /**
-   * GetTypeDataStepsProcess
+   * Get types data
    */
   public GetTypeDataStepsProcess() {
     return this.httpClient.get<any>(this.url + '/api/p/domains/types-data');
 
+  }
+  /**
+   * Get Types Callbacks
+   */
+  public GetTypesCallbacks() {
+    return this.httpClient.get<any>(this.url + '/api/p/domains/types-callback')
+  }
+  /**
+   * Get Types Operators
+   */
+  public GetTypesOperators() {
+    return this.httpClient.get<any>(this.url + '/api/p/domains/types-operator')
   }
 }

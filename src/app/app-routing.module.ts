@@ -35,7 +35,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'step/:idStepSelect/:nameStep/config/rules',
+    path: 'procesos/:idProceso/step/:idStep/:nameStep/config/rules',
     component: RulesComponent,
     data: {
       title: 'Configuración de reglas'
