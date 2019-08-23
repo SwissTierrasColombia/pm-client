@@ -58,7 +58,12 @@ export class ConfiguracionStepsComponent implements OnInit {
           if (this.idStepSelect) {
             this.services.GetFieldsFromStep(this.idStepSelect._id).subscribe(
               response => {
-                this.formStepProcess = response;
+                let aux = response.filter(item => {
+                  return item.isPrivate === false;
+                })
+                //console.log(aux);
+
+                this.formStepProcess = aux;
                 for (let i in this.formStepProcess) {
                   this.formStepProcess[i].type = this.formStepProcess[i].typeData._id;
                 }

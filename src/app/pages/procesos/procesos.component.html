@@ -10,7 +10,6 @@
                         <thead>
                             <tr>
                                 <th>Nombre del procesos</th>
-                                <th>variables</th>
                                 <th>Fecha de creación</th>
                                 <th>Configurar</th>
                                 <th>Eliminar</th>
@@ -21,11 +20,6 @@
                                 <td><i class="material-icons cursor"
                                         (click)="viewupdateProcess(item.process.process,id)">update</i>
                                     {{ item.process.process }}
-                                </td>
-                                <td>
-                                    <div *ngFor="let va of item.process.variales">
-                                        <span>{{va}}</span>
-                                    </div>
                                 </td>
                                 <td>{{ item.process.createdAt }}</td>
                                 <td>
