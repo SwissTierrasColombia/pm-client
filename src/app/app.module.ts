@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { RulesComponent } from './pages/configuracion-steps/rules/rules.component';
+import { Typedata } from 'src/app/models/typedata';
+import { Callbacks } from 'src/app/models/callbacks';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,10 @@ import { RulesComponent } from './pages/configuracion-steps/rules/rules.componen
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    Typedata,
+    Callbacks
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

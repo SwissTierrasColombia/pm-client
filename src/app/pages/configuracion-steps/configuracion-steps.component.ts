@@ -53,7 +53,7 @@ export class ConfiguracionStepsComponent implements OnInit {
         response => {
           this.allstepsSelect = response;
           this.idStepSelect = this.allstepsSelect.find((item) => {
-            return item.typeStep == this.idStep;
+            return item.typeStep._id == this.idStep;
           })
           if (this.idStepSelect) {
             this.services.GetFieldsFromStep(this.idStepSelect._id).subscribe(

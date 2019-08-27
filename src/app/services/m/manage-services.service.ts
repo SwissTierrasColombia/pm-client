@@ -141,8 +141,8 @@ export class ManageServicesService {
   /**
    * Add Rule To Step
    */
-  public AddRuleToStep(idStep: string) {
-    return this.httpClient.post(this.url + '/api/m/steps/' + idStep + '/rules', {})
+  public AddRuleToStep(idStep: string, data: any) {
+    return this.httpClient.post(this.url + '/api/m/steps/' + idStep + '/rules', data)
   }
   /**
    * Remove rule to step

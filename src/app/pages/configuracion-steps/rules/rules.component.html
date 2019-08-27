@@ -17,7 +17,7 @@
         <form action="" method="post">
             <div class="form-group">
                 <div class="row m-1" *ngFor="let form of formRulesStepProcess; let idOut = index;">
-                    {{form | json}}
+                    <!-- {{form | json}} -->
                     <div class="row justify-content">
                         <div class="col-11">
                             <button class="btn btn-danger" type="submit" (click)="deleteRule(idOut)">-</button>
@@ -26,17 +26,17 @@
 
                     <div class="col-12">
                         <div class="row m-2">
-                            <div class="col-sm-10">
+                            <div class="col-sm-11">
                                 <h5>Condiciones</h5>
                             </div>
-                            <div class="col-2">
+                            <div class="col-1">
                                 <button class="btn btn-primary fixed_button" type="submit"
                                     (click)="addNewConditions(idOut)">+</button>
                             </div>
                         </div>
                         <!-- {{form | json}} -->
                         <div class="row m-1" *ngFor="let item of form.conditions; let idInt = index;">
-                            <!-- {{item | json}} -->
+                            <!-- {{item | json}}  -->
                             <div class="col-1">
                                 <button class="btn btn-danger" type="submit"
                                     (click)="deleteConditions(idOut,idInt)">-</button>
@@ -47,7 +47,8 @@
                                         <span class="input-group-text">Campos</span>
                                     </div>
                                     <select class="form-control" id="typeData{{idOut}}{{idInt}}"
-                                        name="typeData{{idOut}}{{idInt}}" [(ngModel)]="item.field">
+                                        name="typeData{{idOut}}{{idInt}}" [(ngModel)]="item.field"
+                                        (ngModelChange)="modelChanged(item.field,idOut,idInt )">
                                         <option *ngFor="let fiel of allFieldStep" name="fiel._id" [ngValue]="fiel._id">
                                             {{fiel.nameField}}
                                         </option>
@@ -69,7 +70,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" *ngIf="item && typedata.Texto === item.typeData">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Valor: </span>
@@ -78,12 +79,48 @@
                                         name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                 </div>
                             </div>
+                            <div class="col-sm-3" *ngIf="item && typedata.Numerico === item.typeData">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Valor: </span>
+                                    </div>
+                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="number"
+                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                                </div>
+                            </div>
+                            <div class="col-sm-3" *ngIf=" item && typedata.CorreoElectronico === item.typeData">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Valor: </span>
+                                    </div>
+                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="email"
+                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                                </div>
+                            </div>
+                            <div class="col-sm-3" *ngIf="item && typedata.NumeroCelular === item.typeData">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Valor: </span>
+                                    </div>
+                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="number"
+                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                                </div>
+                            </div>
+                            <div class="col-sm-3" *ngIf="item && typedata.Fecha === item.typeData">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Valor: </span>
+                                    </div>
+                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="date"
+                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                                </div>
+                            </div>
                         </div>
                         <div class="row m-5">
-                            <div class="col-sm-10">
+                            <div class="col-sm-11">
                                 <h5>Callbacks</h5>
                             </div>
-                            <div class="col-2">
+                            <div class="col-1">
                                 <button class="btn btn-primary fixed_button" type="submit"
                                     (click)="addNewCallback(idOut)">+</button>
                             </div>
@@ -94,7 +131,6 @@
                                     (click)="deleteCallback(idOut,idInt)">-</button>
                             </div>
                             <div class="col-11">
-                                <!-- {{call | json}} -->
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">callback</span>
@@ -108,7 +144,7 @@
                                 </div>
                             </div>
                             <!-- {{call | json}} -->
-                            <div class="m-1" *ngIf="call.callback == '5d5c1484d4302ab4ff21ecdd' ">
+                            <div class="m-1" *ngIf="call.callback === callbacks.CorreoElectronico ">
                                 <!-- Correo electronico -->
                                 <div class="row justify-content-center">
                                     <div class="col-12 col-sm-6">
@@ -116,7 +152,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Para: </span>
                                             </div>
-                                            <input class="form-control" id="para{{idOut}}{{idInt}}" type="text"
+                                            <input class="form-control" id="para{{idOut}}{{idInt}}" type="gmail"
                                                 name="para{{idOut}}{{idInt}}" [(ngModel)]="call.metadata.to">
                                         </div>
                                     </div>
@@ -140,7 +176,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-1" *ngIf="call.callback == '5d5c148a0a2eacc6f388b2a1' ">
+                            <div class="m-1" *ngIf="call.callback === callbacks.MensajeTexto ">
                                 <!-- Mensaje de texto -->
                                 <div class="row m-2">
                                     <div class="col-12">
@@ -163,9 +199,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="m-1" *ngIf="call.callback == '5d5c149a82457777a6ad01c9' ">
+                            <div class="m-1" *ngIf="call.callback === callbacks.CambioPaso ">
                                 <!-- Siguiente paso-->
-                                <div class="row">
+                                <!-- Todos los Steps Seleccionados: {{allstepsSelect | json}} -->
+                                <!-- Step a configurar: {{idStepSelect | json}} -->
+                                <div class="row" *ngIf="allstepsSelect">
                                     <div class="col-12">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -173,9 +211,9 @@
                                             </div>
                                             <select class="form-control" id="paso{{idOut}}{{idInt}}"
                                                 name="paso{{idOut}}{{idInt}}" [(ngModel)]="call.metadata.step">
-                                                <option *ngFor="let item of steps" name="item.step._id"
-                                                    [ngValue]="item.step._id">
-                                                    {{item.step.step}}
+                                                <option *ngFor="let item of allstepsSelect" name="item.typeStep._id"
+                                                    [ngValue]="item.typeStep._id">
+                                                    {{item._id!=idStepSelect._id ? item.typeStep.step : null }}
                                                 </option>
                                             </select>
                                         </div>
@@ -183,9 +221,17 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
+
                 </div>
             </div>
         </form>
+        <div class="row justify-content-center mt-2">
+            <div class="col-sm-8">
+                <button (click)="CreateRule()" type="button" class="btn btn-dark btn-block">Agregar Reglas al paso
+                    {{nameStep}}</button>
+            </div>
+        </div>
     </div>
 </div>

@@ -3,7 +3,9 @@ import { ManageServicesService } from 'src/app/services/m/manage-services.servic
 import { ParameterizationServicesService } from 'src/app/services/p/parameterization-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { GetTypesCallback } from '../../../interface/get-types-callback';
+import { GetTypesCallback, TypeData } from '../../../interface/get-types-callback';
+import { Typedata } from 'src/app/models/typedata';
+import { Callbacks } from 'src/app/models/callbacks';
 
 @Component({
   selector: 'app-rules',
@@ -21,12 +23,15 @@ export class RulesComponent implements OnInit {
   allstepsSelect: any;
   allCallback: GetTypesCallback;
   steps = [];
+
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public typedata: Typedata,
+    public callbacks: Callbacks
   ) { }
 
   ngOnInit() {
@@ -54,36 +59,20 @@ export class RulesComponent implements OnInit {
           this.allstepsSelect = response;
           //console.log("this.allstepsSelect: ", this.allstepsSelect);
           this.idStepSelect = this.allstepsSelect.find((item) => {
-            return item.typeStep == this.idStep;
+            return item.typeStep._id == this.idStep;
           })
 
           if (this.idStepSelect) {
             this.services.GetFieldsFromStep(this.idStepSelect._id).subscribe(
               response => {
                 this.allFieldStep = response;
-                //console.log("this.idStepSelect: ", this.idStepSelect);
+                console.log("this.idStepSelect: ", this.idStepSelect._id);
                 resolve()
               }, error => {
                 console.log(error);
               }
             )
           }
-          this.servicesp.GetSteps().subscribe(
-            response => {
-              for (let i in response) {
-                this.steps.push({
-                  "step": response[i],
-                  "status": false
-                })
-              }
-              //console.log("this.steps: ", this.steps);
-
-            },
-            error => {
-              console.log("error: ", error);
-            }
-
-          );
         }, error => {
           console.log("error obteniendo los pasos de procesos: ", error);
 
@@ -102,21 +91,14 @@ export class RulesComponent implements OnInit {
               {}
             ],
             "callbacks": [
-              {}
+              {
+                'metadata': {}
+              }
             ],
           }
         ]
       }
       //console.log("this.formRulesStepProcess: ", this.formRulesStepProcess);
-      let self = this;
-      this.steps = this.steps.map(function (variable, index, array) {
-        if (self.allstepsSelect.find((elem: any) => elem.typeStep == variable.step._id)) {
-          variable.status = true;
-        }
-        return variable
-      });
-      this.steps = this.steps.filter(item => item.status == true);
-      console.log(this.steps);
 
 
     });
@@ -144,7 +126,9 @@ export class RulesComponent implements OnInit {
         {}
       ],
       "callbacks": [
-        {}
+        {
+          'metadata': {}
+        }
       ],
     });
   }
@@ -152,16 +136,72 @@ export class RulesComponent implements OnInit {
     this.formRulesStepProcess[idOut].conditions.push({});
   }
   addNewCallback(idOut: number) {
-    this.formRulesStepProcess[idOut].callbacks.push({});
+    this.formRulesStepProcess[idOut].callbacks.push({ 'metadata': {} });
   }
   deleteRule(idOut: number) {
-    this.formRulesStepProcess.splice(idOut, 1);
+    let idRule = this.formRulesStepProcess[idOut]._id
+    this.services.RemoveRuleToStep(this.idStepSelect._id, idRule).subscribe(
+      response => {
+        this.toastr.success("Se a eliminado correctamente la regla")
+        this.formRulesStepProcess.splice(idOut, 1);
+        setTimeout(function () { window.location.reload(); }, 1000);
+      },
+      error => {
+        this.toastr.error("No se puede eliminar la regla")
+      }
+    )
+    //this.formRulesStepProcess.splice(idOut, 1);
   }
   deleteConditions(idOut: number, idin: number) {
     this.formRulesStepProcess[idOut].conditions.splice(idin, 1);
   }
   deleteCallback(idOut: number, idin: number) {
     this.formRulesStepProcess[idOut].callbacks.splice(idin, 1);
+  }
+  modelChanged(idfiel, idOut, idInt) {
+    //console.log("this.allFieldStep: ", this.allFieldStep);
+
+    let aux = this.allFieldStep.find((item) => {
+      return item._id == idfiel;
+    })
+    //console.log(aux.typeData._id);
+
+    if (aux.typeData._id === this.typedata.CorreoElectronico) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.CorreoElectronico
+      //console.log("correo");
+    }
+    if (aux.typeData._id === this.typedata.Fecha) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.Fecha
+      //console.log("fecha");
+
+    }
+    if (aux.typeData._id === this.typedata.Numerico) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.Numerico
+      //console.log("numerico");
+
+    }
+    if (aux.typeData._id === this.typedata.Texto) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.Texto
+      //console.log("text");
+
+    }
+
+  }
+  CreateRule() {
+    let data = this.clone(this.formRulesStepProcess)
+    for (let i in data) {
+      this.services.AddRuleToStep(this.idStepSelect._id, data[i]).subscribe(
+        response => {
+          this.toastr.success("Se han registrado las reglas")
+          setTimeout(function () { window.location.reload(); }, 1000);
+        }, error => {
+          if (error.error.message == "Las condiciones para la regla son inválidas.") {
+            this.toastr.error("Las condiciones para la regla son inválidas.")
+          }
+
+        }
+      )
+    }
   }
 
 }

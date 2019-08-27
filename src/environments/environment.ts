@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  back_mongo: 'http://192.168.98.75:8000',
+  back_mongo: 'http://192.168.98.61:8000',
 };
 
 /*

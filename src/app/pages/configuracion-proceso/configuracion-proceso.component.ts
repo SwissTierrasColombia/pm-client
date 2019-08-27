@@ -68,9 +68,11 @@ export class ConfiguracionProcesoComponent implements OnInit {
     this.services.GetStepsProcess(this.idProcess).subscribe(
       response => {
         this.stepsProcess = response;
+        console.log("stepsProcess: ", this.stepsProcess);
+
         let self = this;
         this.steps = this.steps.map(function (variable, index, array) {
-          if (self.stepsProcess.find((elem: any) => elem.typeStep == variable.step._id)) {
+          if (self.stepsProcess.find((elem: any) => elem.typeStep._id == variable.step._id)) {
             variable.status = true;
           }
           return variable
