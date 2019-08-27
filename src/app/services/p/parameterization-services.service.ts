@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { GetTypesCallback } from 'src/app/interface/get-types-callback';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class ParameterizationServicesService {
    * Get Types Callbacks
    */
   public GetTypesCallbacks() {
-    return this.httpClient.get<any>(this.url + '/api/p/domains/types-callback')
+    return this.httpClient.get<GetTypesCallback>(this.url + '/api/p/domains/types-callback')
   }
   /**
    * Get Types Operators

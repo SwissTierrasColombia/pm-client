@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { GetStepsProcess } from 'src/app/interface/get-steps-process';
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +71,7 @@ export class ManageServicesService {
    * Get steps from process
    */
   public GetStepsProcess(id: string) {
-    return this.httpClient.get<any>(this.url + '/api/m/processes/' + id + '/steps');
+    return this.httpClient.get<GetStepsProcess>(this.url + '/api/m/processes/' + id + '/steps');
   }
   /**
    * Remove Step To Process
