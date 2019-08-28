@@ -198,24 +198,71 @@ export class ConfiguracionProcesoComponent implements OnInit {
           self.services.AddStepProcess(self.idProcess, variable.step._id).subscribe(
             data => {
               self.toastr.success("Haz registrado el step: " + variable.step.step);
-              //setTimeout(function () { window.location.reload(); }, 1000);
             }
           );
         });
         resolve()
       });
       Promise.all([promise1]).then(values => {
-        console.log(values);
+        setTimeout(function () { window.location.reload(); }, 1000);
 
       });
     });
+  }
+  addstepsProcess2() {
+    //console.log("stepsProcess: ", this.stepsProcess);
 
-
+    let auxAllStep = this.clone(this.steps)
+    let auxSteps: any
+    let promise1 = new Promise((resolve, reject) => {
+      auxSteps = auxAllStep.filter(step => step.status == true)
+      resolve()
+    });
+    let temp: any
+    let promise2 = new Promise((resolve, reject) => {
+      let self = this;
+      temp = auxAllStep.map(function (item, index, array) {
+        if (self.stepsProcess.find((elem: any) => elem.typeStep._id == item.step._id)) {
+          item.status = false;
+        } else {
+          item.status = true;
+        }
+        return item
+      })
+      //console.log("temp", temp);
+      resolve()
+    });
+    Promise.all([promise1, promise2]).then(values => {
+      //let aux = auxAllStep.filter(step => step.status == true)
+      //auxStepsNew = auxSteps.filter(step => step.status == true)
+      console.log("auxSteps: ", auxSteps);
+      let array = []
+      for (let i in auxSteps) {
+        if (auxSteps[i].status) {
+          array.push(auxSteps[i])
+        }
+      }
+      console.log(array);
+      let promise1 = new Promise((resolve, reject) => {
+        let self = this;
+        array.map(function (variable) {
+          self.services.AddStepProcess(self.idProcess, variable.step._id).subscribe(
+            data => {
+              self.toastr.success("Haz registrado el step: " + variable.step.step);
+            }
+          );
+        });
+        resolve()
+      });
+      Promise.all([promise1]).then(values => {
+        //setTimeout(function () { window.location.reload(); }, 1000);
+      });
+    });
   }
   configStep(idStep: string, nameStep: string, id) {
     console.log(this.stepsProcess[id]);
     if (this.steps[id].status) {
-      this.addstepsProcess();
+      this.addstepsProcess2();
       this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/configuracion/']);
     } else {
       this.toastr.info("Al parecer no haz agregado este paso al proceso", "Por favor agregalo primero.")
@@ -225,7 +272,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
   configRules(idStep: string, nameStep: string, id) {
     console.log(this.stepsProcess[id]);
     if (this.steps[id].status) {
-      this.addstepsProcess();
+      this.addstepsProcess2();
       this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/config/rules']);
     } else {
       this.toastr.info("Al parecer no haz agregado este paso al proceso", "Por favor agregalo primero.")
