@@ -21,13 +21,19 @@
                 <li class="nav-item">
                     <a class="nav-link active cursor" data-toggle="tab" [ngClass]="{'active':tab === 2}" role="tab"
                         (click)="tab=2" aria-controls="roles">
-                        <i class="material-icons">person_add</i>Roles
+                        <i class="material-icons">supervised_user_circle</i>Roles
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active cursor" data-toggle="tab" [ngClass]="{'active':tab === 3}" role="tab"
                         (click)="tab=3" aria-controls="variables">
                         <i class="material-icons">list</i>Variables
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active cursor" data-toggle="tab" [ngClass]="{'active':tab === 4}" role="tab"
+                        (click)="tab=4" aria-controls="usuarios">
+                        <i class="material-icons">person_add</i>Registrar Usuarios
                     </a>
                 </li>
             </ul>
@@ -178,6 +184,99 @@
                                 <button (click)="updateVariableProcess()" type="button"
                                     class="btn btn-dark btn-block">Actualizar
                                     variable del proceso</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="usuarios" class="tab-pane" [ngClass]="{'active':tab === 4}" role="tabpanel"><br>
+                    <div class="row justify-content-start" *ngIf="usuarios">
+                        <ul id="ul-{{i}}-User" class="col-2 m-2" *ngFor="let item of usuarios; let i= index">
+                            <li id="li-{{i}}">
+                                <i class="material-icons">details</i>
+                                Usuario: {{item.username}} <br> Nombre Completo: {{item.firstName}} {{item.lastName}} 
+                                <i class="material-icons cursor m-2" (click)="configVariable(item._id, i)">update</i>
+                                <i class="material-icons cursor m-2" (click)="deleteVariable(item._id, i)">delete</i>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12" *ngIf="actualizarUsuario==false">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Primer Nombre: </span>
+                                            </div>
+                                            <input class="form-control" id="firstName" type="text" name="firstName"
+                                                [(ngModel)]="firstName">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Segundo Nombre: </span>
+                                            </div>
+                                            <input class="form-control" id="lastName" type="text" name="lastName"
+                                                [(ngModel)]="lastName">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nombre de usuario </span>
+                                            </div>
+                                            <input class="form-control" id="username" type="text" name="username"
+                                                [(ngModel)]="username">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-sm-8">
+                                <button (click)="addUserProcess()" type="button" class="btn btn-dark btn-block">Añadir
+                                    Usuario</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" *ngIf="actualizarUsuario">
+                        <form action="" method="post">
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Primer Nombre: </span>
+                                        </div>
+                                        <input class="form-control" id="firstName" type="text" name="firstName"
+                                            [(ngModel)]="firstName">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Segundo Nombre: </span>
+                                        </div>
+                                        <input class="form-control" id="lastName" type="text" name="lastName"
+                                            [(ngModel)]="lastName">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Nombre de usuario </span>
+                                        </div>
+                                        <input class="form-control" id="username" type="text" name="username"
+                                            [(ngModel)]="username">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-sm-8">
+                                <button (click)="updateUserProcess()" type="button"
+                                    class="btn btn-dark btn-block">Actualizar
+                                    usuario</button>
                             </div>
                         </div>
                     </div>

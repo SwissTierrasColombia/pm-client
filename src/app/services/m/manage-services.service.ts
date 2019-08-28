@@ -103,6 +103,30 @@ export class ManageServicesService {
   public RemoveVariableFromProcess(idProcess: string, idVariable: string) {
     return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/variables/' + idVariable);
   }
+  /**
+   * Add Users To Process
+   */
+  public AddUsersToProcess(idProcess: string, data: any) {
+    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/users', data)
+  }
+  /**
+   * Get Users To Process
+   */
+  public GetUsersToProcess(idProcess: string) {
+    return this.httpClient.get<any>(this.url + '/api/m/processes/' + idProcess + '/users')
+  }
+  /**
+   * Update User To Process
+   */
+  public UpdateUserToProcess(idProcess: string, idUser: string, data: any) {
+    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/users/' + idUser, data)
+  }
+  /**
+   * Remove User From Process
+   */
+  public RemoveUserFromProcess(idProcess: string, idUser: string) {
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/users/' + idUser)
+  }
 
   // FIN M/Processes
 

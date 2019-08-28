@@ -25,6 +25,11 @@ export class ConfiguracionProcesoComponent implements OnInit {
   nomVariableCreate: string;
   valorVariableCreate: string;
   idVariableupdate: string;
+  actualizarUsuario = false;
+  firstName: string;
+  lastName: string;
+  username: string;
+  usuarios: any;
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
@@ -262,5 +267,10 @@ export class ConfiguracionProcesoComponent implements OnInit {
   volver() {
     this.router.navigate(['procesos/']);
   }
+  addUserProcess() {
 
+  }
+  updateUserProcess() {
+
+  }
 }
