@@ -31,6 +31,8 @@ export class ConfiguracionProcesoComponent implements OnInit {
   username: string;
   usuarios: any;
   userRoles: any;
+  idUserRol: string;
+  userRolesUpdate: any;
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
@@ -248,8 +250,22 @@ export class ConfiguracionProcesoComponent implements OnInit {
   volver() {
     this.router.navigate(['procesos/']);
   }
-  configUser() {
-
+  configUser(idUser: string, i: number) {
+    this.idUserRol = idUser;
+    this.username = this.usuarios[i].username;
+    this.firstName = this.usuarios[i].firstName;
+    this.lastName = this.usuarios[i].lastName;
+    this.actualizarUsuario = true
+    this.userRolesUpdate = this.clone(this.userRoles)
+    let auxRolesActivos = this.usuarios[i].roles
+    for (let j in this.userRolesUpdate) {
+      const temp = auxRolesActivos.find(item => {
+        return item._id.toString() === this.userRolesUpdate[j]._id.toString();
+      });
+      if (temp) {
+        this.userRolesUpdate[j].status = true
+      }
+    }
   }
   deleteUser(idUser: string, i: number) {
     this.services.RemoveUserFromProcess(this.idProcess, idUser).subscribe(
@@ -287,6 +303,30 @@ export class ConfiguracionProcesoComponent implements OnInit {
     )
   }
   updateUserProcess() {
+    let verificarRoles = this.clone(this.userRolesUpdate)
+    verificarRoles = verificarRoles.filter(item => {
+      return item.status === true;
+    })
+    let idROles = []
+    for (let i in verificarRoles) {
+      idROles.push(verificarRoles[i]._id)
+    }
+    let data = {
+      "firstName": this.firstName,
+      "lastName": this.lastName,
+      "username": this.username,
+      "roles": idROles
+    }
+    this.services.UpdateUserToProcess(this.idProcess, this.idUserRol, data).subscribe(
+      data => {
+        this.toastr.success("Se a actualizado", this.username);
+        this.username = '';
+        this.firstName = '';
+        this.lastName = '';
+        this.usuarios = data;
+        this.actualizarUsuario = false
+      }
+    )
 
   }
 }

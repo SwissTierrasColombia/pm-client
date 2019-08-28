@@ -291,6 +291,14 @@
                                             [(ngModel)]="username">
                                     </div>
                                 </div>
+                                <div class="col-12 mt-3">
+                                    <div class="form-check form-check-inline ml-5"
+                                        *ngFor="let item of userRolesUpdate; let id = index;">
+                                        <input name="role{{id}}" class="form-check-input" type="checkbox"
+                                            id="inlineCheckbox{{id}}" [(ngModel)]="item.status">
+                                        <label class="form-check-label" for="inlineCheckbox{{id}}">{{item.role}}</label>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <div class="row justify-content-center mt-2">
