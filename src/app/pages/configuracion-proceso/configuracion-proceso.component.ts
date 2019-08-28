@@ -159,16 +159,58 @@ export class ConfiguracionProcesoComponent implements OnInit {
     }
   }
   addstepsProcess() {
-    let auxSteps = this.steps.filter(step => step.status == true)
-    // console.log(auxSteps);
-    let self = this
-    auxSteps.map(function (variable) {
-      self.services.AddStepProcess(self.idProcess, variable.step._id).subscribe(
-        data => {
-          self.toastr.success("Haz registrado el step: " + variable.step.step);
-        }
-      );
+    //console.log("stepsProcess: ", this.stepsProcess);
+
+    let auxAllStep = this.clone(this.steps)
+    let auxSteps: any
+    let promise1 = new Promise((resolve, reject) => {
+      auxSteps = auxAllStep.filter(step => step.status == true)
+      resolve()
     });
+    let temp: any
+    let promise2 = new Promise((resolve, reject) => {
+      let self = this;
+      temp = auxAllStep.map(function (item, index, array) {
+        if (self.stepsProcess.find((elem: any) => elem.typeStep._id == item.step._id)) {
+          item.status = false;
+        } else {
+          item.status = true;
+        }
+        return item
+      })
+      //console.log("temp", temp);
+      resolve()
+    });
+    Promise.all([promise1, promise2]).then(values => {
+      //let aux = auxAllStep.filter(step => step.status == true)
+      //auxStepsNew = auxSteps.filter(step => step.status == true)
+      console.log("auxSteps: ", auxSteps);
+      let array = []
+      for (let i in auxSteps) {
+        if (auxSteps[i].status) {
+          array.push(auxSteps[i])
+        }
+      }
+      console.log(array);
+      let promise1 = new Promise((resolve, reject) => {
+        let self = this;
+        array.map(function (variable) {
+          self.services.AddStepProcess(self.idProcess, variable.step._id).subscribe(
+            data => {
+              self.toastr.success("Haz registrado el step: " + variable.step.step);
+              //setTimeout(function () { window.location.reload(); }, 1000);
+            }
+          );
+        });
+        resolve()
+      });
+      Promise.all([promise1]).then(values => {
+        console.log(values);
+
+      });
+    });
+
+
   }
   configStep(idStep: string, nameStep: string, id) {
     console.log(this.stepsProcess[id]);
@@ -197,7 +239,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
       response => {
         this.allstepsSelect = response;
         this.idStepSelect = this.allstepsSelect.find((item) => {
-          return item.typeStep == id;
+          return item.typeStep._id == id;
         })
         if (this.idStepSelect) {
           this.services.RemoveStepToProcess(this.idProcess, this.idStepSelect._id).subscribe(
