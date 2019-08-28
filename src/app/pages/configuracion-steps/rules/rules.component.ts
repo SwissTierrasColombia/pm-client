@@ -49,7 +49,7 @@ export class RulesComponent implements OnInit {
         //console.log(this.allCallback);
       },
       error => {
-        console.log(error);
+        this.toastr.error(error.error.message);
 
       }
     )
@@ -69,12 +69,12 @@ export class RulesComponent implements OnInit {
                 console.log("this.idStepSelect: ", this.idStepSelect._id);
                 resolve()
               }, error => {
-                console.log(error);
+                this.toastr.error(error.error.message);
               }
             )
           }
         }, error => {
-          console.log("error obteniendo los pasos de procesos: ", error);
+          this.toastr.error(error.error.message);
 
         }
       )
@@ -109,7 +109,7 @@ export class RulesComponent implements OnInit {
 
       },
       error => {
-        console.log("error typeOperaators: ", error);
+        this.toastr.error(error.error.message);
 
       }
     )
@@ -147,7 +147,7 @@ export class RulesComponent implements OnInit {
         setTimeout(function () { window.location.reload(); }, 1000);
       },
       error => {
-        this.toastr.error("No se puede eliminar la regla")
+        this.toastr.error(error.error.message);
       }
     )
     //this.formRulesStepProcess.splice(idOut, 1);
@@ -195,9 +195,7 @@ export class RulesComponent implements OnInit {
           this.toastr.success("Se han registrado las reglas")
           setTimeout(function () { window.location.reload(); }, 1000);
         }, error => {
-          if (error.error.message == "Las condiciones para la regla son inválidas.") {
-            this.toastr.error("Las condiciones para la regla son inválidas.")
-          }
+          this.toastr.error(error.error.message);
 
         }
       )

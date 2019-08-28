@@ -44,7 +44,7 @@ export class ConfiguracionStepsComponent implements OnInit {
         this.typedata = response;
       },
       error => {
-        console.log("error:", error);
+        this.toastr.error(error.error.message);
 
       }
     )
@@ -69,14 +69,14 @@ export class ConfiguracionStepsComponent implements OnInit {
                 }
                 resolve()
               }, error => {
-                console.log(error);
+                this.toastr.error(error.error.message);
               }
             )
           }
           //console.log("this.idStepSelect: ", this.idStepSelect);
 
         }, error => {
-          console.log("error obteniendo los pasos de procesos: ", error);
+          this.toastr.error(error.error.message);
 
         }
       )
@@ -105,7 +105,7 @@ export class ConfiguracionStepsComponent implements OnInit {
           }
         },
         error => {
-          console.log("error:", error);
+          this.toastr.error(error.error.message);
 
         }
       );
@@ -129,8 +129,7 @@ export class ConfiguracionStepsComponent implements OnInit {
         this.formStepProcess.splice(id, 1)
       },
       error => {
-        this.toastr.success("No se elimino el campo")
-        console.log("No se elimino el campo: ", error);
+        this.toastr.error(error.error.message);
 
       }
     )
@@ -149,9 +148,7 @@ export class ConfiguracionStepsComponent implements OnInit {
               resolve()
             },
             error => {
-              //console.log("error AddFieldToStep: ", error);
-
-
+              this.toastr.error(error.error.message);
             }
           )
         });
@@ -164,7 +161,7 @@ export class ConfiguracionStepsComponent implements OnInit {
               resolve()
             },
             error => {
-              console.log("error UpdateFieldToStep: ", error);
+              this.toastr.error(error.error.message);
 
             }
           )

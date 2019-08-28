@@ -30,6 +30,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
   lastName: string;
   username: string;
   usuarios: any;
+  userRoles: any;
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
@@ -54,7 +55,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         }
       },
       error => {
-        console.log("error: ", error);
+        this.toastr.error(error.error.message);
 
       }
 
@@ -62,18 +63,22 @@ export class ConfiguracionProcesoComponent implements OnInit {
     this.services.GetRolesProcess(this.idProcess).subscribe(
       response => {
         this.roles = response;
+        this.userRoles = this.clone(this.roles)
+        for (let i in this.userRoles) {
+          this.userRoles[i].status = false;
+        }
         //console.log("this.roles: ", this.roles);
 
       },
       error => {
-        console.log("error: ", error);
+        this.toastr.error(error.error.message);
 
       }
     );
     this.services.GetStepsProcess(this.idProcess).subscribe(
       response => {
         this.stepsProcess = response;
-        console.log("stepsProcess: ", this.stepsProcess);
+        //console.log("stepsProcess: ", this.stepsProcess);
 
         let self = this;
         this.steps = this.steps.map(function (variable, index, array) {
@@ -84,13 +89,28 @@ export class ConfiguracionProcesoComponent implements OnInit {
         });
       },
       error => {
-        console.log("error: ", error);
+        this.toastr.error(error.error.message);
       });
     this.services.GetVariablesFromProcess(this.idProcess).subscribe(
       response => {
         this.variables = response;
       }, error => {
-        console.log("error Get Variables: ", error);
+        this.toastr.error(error.error.message);
+
+      }
+    )
+    this.services.GetUsersToProcess(this.idProcess).subscribe(
+      data => {
+        this.usuarios = data;
+        for (let i in this.usuarios) {
+          for (let j in this.usuarios[i].roles) {
+            this.usuarios[i].roles[j].status = true;
+          }
+        }
+        console.log("this.usuarios: ", this.usuarios);
+
+      }, error => {
+        this.toastr.error(error.error.message);
 
       }
     )
@@ -108,7 +128,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.toastr.success("Se a registrado la variable al proceso.")
       },
       error => {
-        this.toastr.error("No se pudo añadir la variable al proceso.")
+        this.toastr.error(error.error.message);
       }
     )
     this.nomVariableCreate = '';
@@ -138,7 +158,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.actualizarVariable = false;
       },
       error => {
-        this.toastr.error("No se Actualizo el rol");
+        this.toastr.error(error.error.message);
       }
     );
   }
@@ -148,7 +168,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.toastr.success("Haz Eliminado una variable");
         this.variables.splice(id, 1)
       }, error => {
-        this.toastr.error("No se Elimino la variable");
+        this.toastr.error(error.error.message);
       }
     )
   }
@@ -172,6 +192,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
           self.toastr.success("Haz registrado el step: " + variable.step.step);
         },
         error => {
+          this.toastr.error(error.error.message);
         }
       );
     });
@@ -211,7 +232,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
               this.toastr.success("Se a eliminado un Step");
             },
             error => {
-              this.toastr.error("No se a podido eliminar el step");
+              this.toastr.error(error.error.message);
             }
           );
         } else {
@@ -234,7 +255,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.toastr.success("Haz Eliminado un rol");
         this.roles.splice(id, 1)
       }, error => {
-        this.toastr.error("No se Elimino el rol");
+        this.toastr.error(error.error.message);
       }
     )
   }
@@ -248,7 +269,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.actualizarRol = false;
       },
       error => {
-        this.toastr.error("No se Actualizo el rol");
+        this.toastr.error(error.error.message);
       }
     );
   }
@@ -260,15 +281,47 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.nomRolCreate = "";
       },
       error => {
-        this.toastr.error("No se registro el rol");
+        this.toastr.error(error.error.message);
       }
     );
   }
   volver() {
     this.router.navigate(['procesos/']);
   }
-  addUserProcess() {
+  configUser() {
 
+  }
+  deleteUser() {
+
+  }
+  addUserProcess() {
+    let verificarRoles = this.clone(this.userRoles)
+    verificarRoles = verificarRoles.filter(item => {
+      return item.status === true;
+    })
+    let idROles = []
+    for (let i in verificarRoles) {
+      idROles.push(verificarRoles[i]._id)
+    }
+    //console.log(idROles);
+
+    let data = {
+      "firstName": this.firstName,
+      "lastName": this.lastName,
+      "username": this.username,
+      "roles": idROles
+    }
+    this.services.AddUsersToProcess(this.idProcess, data).subscribe(
+      data => {
+        this.toastr.success("Se a registrado ", this.username);
+        this.username = '';
+        this.firstName = '';
+        this.lastName = '';
+      },
+      error => {
+        this.toastr.error(error.error.message)
+      }
+    )
   }
   updateUserProcess() {
 
