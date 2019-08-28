@@ -53,10 +53,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
             "status": false
           })
         }
-      },
-      error => {
-        this.toastr.error(error.error.message);
-
       }
 
     );
@@ -68,11 +64,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
           this.userRoles[i].status = false;
         }
         //console.log("this.roles: ", this.roles);
-
-      },
-      error => {
-        this.toastr.error(error.error.message);
-
       }
     );
     this.services.GetStepsProcess(this.idProcess).subscribe(
@@ -87,16 +78,10 @@ export class ConfiguracionProcesoComponent implements OnInit {
           }
           return variable
         });
-      },
-      error => {
-        this.toastr.error(error.error.message);
       });
     this.services.GetVariablesFromProcess(this.idProcess).subscribe(
       response => {
         this.variables = response;
-      }, error => {
-        this.toastr.error(error.error.message);
-
       }
     )
     this.services.GetUsersToProcess(this.idProcess).subscribe(
@@ -108,9 +93,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
           }
         }
         console.log("this.usuarios: ", this.usuarios);
-
-      }, error => {
-        this.toastr.error(error.error.message);
 
       }
     )
@@ -126,9 +108,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
       Response => {
         this.variables = Response;
         this.toastr.success("Se a registrado la variable al proceso.")
-      },
-      error => {
-        this.toastr.error(error.error.message);
       }
     )
     this.nomVariableCreate = '';
@@ -156,9 +135,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.idVariableupdate = "";
         this.valorVariableCreate = "";
         this.actualizarVariable = false;
-      },
-      error => {
-        this.toastr.error(error.error.message);
       }
     );
   }
@@ -167,8 +143,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
       response => {
         this.toastr.success("Haz Eliminado una variable");
         this.variables.splice(id, 1)
-      }, error => {
-        this.toastr.error(error.error.message);
       }
     )
   }
@@ -190,9 +164,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
       self.services.AddStepProcess(self.idProcess, variable.step._id).subscribe(
         data => {
           self.toastr.success("Haz registrado el step: " + variable.step.step);
-        },
-        error => {
-          this.toastr.error(error.error.message);
         }
       );
     });
@@ -230,9 +201,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
           this.services.RemoveStepToProcess(this.idProcess, this.idStepSelect._id).subscribe(
             response => {
               this.toastr.success("Se a eliminado un Step");
-            },
-            error => {
-              this.toastr.error(error.error.message);
             }
           );
         } else {
@@ -254,8 +222,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
       response => {
         this.toastr.success("Haz Eliminado un rol");
         this.roles.splice(id, 1)
-      }, error => {
-        this.toastr.error(error.error.message);
       }
     )
   }
@@ -267,9 +233,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.nomRolCreate = "";
         this.idRolupdate = "";
         this.actualizarRol = false;
-      },
-      error => {
-        this.toastr.error(error.error.message);
       }
     );
   }
@@ -279,9 +242,6 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.roles = data;
         this.toastr.success("Haz registrado el rol: " + this.nomRolCreate);
         this.nomRolCreate = "";
-      },
-      error => {
-        this.toastr.error(error.error.message);
       }
     );
   }
@@ -291,8 +251,13 @@ export class ConfiguracionProcesoComponent implements OnInit {
   configUser() {
 
   }
-  deleteUser() {
-
+  deleteUser(idUser: string, i: number) {
+    this.services.RemoveUserFromProcess(this.idProcess, idUser).subscribe(
+      data => {
+        this.toastr.success("Se a eliminado un usuario")
+        this.usuarios.splice(i, 1)
+      }
+    )
   }
   addUserProcess() {
     let verificarRoles = this.clone(this.userRoles)
@@ -317,9 +282,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
         this.username = '';
         this.firstName = '';
         this.lastName = '';
-      },
-      error => {
-        this.toastr.error(error.error.message)
+        setTimeout(function () { window.location.reload(); }, 1000);
       }
     )
   }

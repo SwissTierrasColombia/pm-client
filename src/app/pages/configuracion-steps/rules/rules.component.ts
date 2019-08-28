@@ -47,10 +47,6 @@ export class RulesComponent implements OnInit {
       response => {
         this.allCallback = response
         //console.log(this.allCallback);
-      },
-      error => {
-        this.toastr.error(error.error.message);
-
       }
     )
     let promiseForm = new Promise((resolve, reject) => {
@@ -68,14 +64,9 @@ export class RulesComponent implements OnInit {
                 this.allFieldStep = response;
                 console.log("this.idStepSelect: ", this.idStepSelect._id);
                 resolve()
-              }, error => {
-                this.toastr.error(error.error.message);
               }
             )
           }
-        }, error => {
-          this.toastr.error(error.error.message);
-
         }
       )
     });
@@ -106,10 +97,6 @@ export class RulesComponent implements OnInit {
       data => {
         this.typeOperaators = data;
         //console.log(this.typeOperaators);
-
-      },
-      error => {
-        this.toastr.error(error.error.message);
 
       }
     )
@@ -145,9 +132,6 @@ export class RulesComponent implements OnInit {
         this.toastr.success("Se a eliminado correctamente la regla")
         this.formRulesStepProcess.splice(idOut, 1);
         setTimeout(function () { window.location.reload(); }, 1000);
-      },
-      error => {
-        this.toastr.error(error.error.message);
       }
     )
     //this.formRulesStepProcess.splice(idOut, 1);
@@ -194,9 +178,6 @@ export class RulesComponent implements OnInit {
         response => {
           this.toastr.success("Se han registrado las reglas")
           setTimeout(function () { window.location.reload(); }, 1000);
-        }, error => {
-          this.toastr.error(error.error.message);
-
         }
       )
     }

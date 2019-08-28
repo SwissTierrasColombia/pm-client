@@ -10,12 +10,13 @@ import { ConfiguracionProcesoComponent } from './pages/configuracion-proceso/con
 import { ConfiguracionStepsComponent } from './pages/configuracion-steps/configuracion-steps.component';
 import { P404Component } from './pages/error/404.component';
 import { P500Component } from './pages/error/500.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { RulesComponent } from './pages/configuracion-steps/rules/rules.component';
 import { Typedata } from 'src/app/models/typedata';
 import { Callbacks } from 'src/app/models/callbacks';
+import { ErrorInterceptorService } from './services/error/error-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +38,8 @@ import { Callbacks } from 'src/app/models/callbacks';
   ],
   providers: [
     Typedata,
-    Callbacks
+    Callbacks,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]
 })

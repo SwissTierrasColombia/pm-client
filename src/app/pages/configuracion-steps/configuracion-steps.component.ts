@@ -42,10 +42,6 @@ export class ConfiguracionStepsComponent implements OnInit {
       response => {
         //console.log("response", response);
         this.typedata = response;
-      },
-      error => {
-        this.toastr.error(error.error.message);
-
       }
     )
     let promiseForm = new Promise((resolve, reject) => {
@@ -68,15 +64,10 @@ export class ConfiguracionStepsComponent implements OnInit {
                   this.formStepProcess[i].type = this.formStepProcess[i].typeData._id;
                 }
                 resolve()
-              }, error => {
-                this.toastr.error(error.error.message);
               }
             )
           }
           //console.log("this.idStepSelect: ", this.idStepSelect);
-
-        }, error => {
-          this.toastr.error(error.error.message);
 
         }
       )
@@ -103,10 +94,6 @@ export class ConfiguracionStepsComponent implements OnInit {
               this.formStepProcess[i].permissions[y].nameRole = this.roles[y].role
             }
           }
-        },
-        error => {
-          this.toastr.error(error.error.message);
-
         }
       );
     });
@@ -127,10 +114,6 @@ export class ConfiguracionStepsComponent implements OnInit {
       response => {
         this.toastr.success("Haz eliminado un campo")
         this.formStepProcess.splice(id, 1)
-      },
-      error => {
-        this.toastr.error(error.error.message);
-
       }
     )
   }
@@ -146,9 +129,6 @@ export class ConfiguracionStepsComponent implements OnInit {
           this.services.AddFieldToStep(this.idStepSelect._id, dataForm[i]).subscribe(
             response => {
               resolve()
-            },
-            error => {
-              this.toastr.error(error.error.message);
             }
           )
         });
@@ -159,10 +139,6 @@ export class ConfiguracionStepsComponent implements OnInit {
             response => {
               //console.log("Good Update: ", response);
               resolve()
-            },
-            error => {
-              this.toastr.error(error.error.message);
-
             }
           )
         });

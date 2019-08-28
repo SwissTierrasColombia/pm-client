@@ -30,9 +30,6 @@ export class ProcesosComponent implements OnInit {
           })
         }
         //console.log("response get this.procesos: ", this.process);
-      },
-      error => {
-        this.toastr.error(error.error.message);
       }
     );
   }
@@ -46,9 +43,6 @@ export class ProcesosComponent implements OnInit {
         this.process.push({ 'process': data });
         this.listaprocesos = true;
         this.toastr.success("Haz registrado el proceso: " + this.nomProcessCreate)
-      },
-      error => {
-        this.toastr.error(error.error.message);
       }
     );
   }
@@ -73,8 +67,6 @@ export class ProcesosComponent implements OnInit {
       response => {
         setTimeout(function () { window.location.reload(); }, 1000);
         this.toastr.success("Haz Actualizado un proceso")
-      }, error => {
-        this.toastr.error(error.error.message);
       }
     )
   }
@@ -84,8 +76,6 @@ export class ProcesosComponent implements OnInit {
       paramName => {
         this.toastr.success("Se a eliminado un proceso")
         this.process.splice(id, 1);
-      }, error => {
-        this.toastr.error(error.error.message);
       });
   }
 
