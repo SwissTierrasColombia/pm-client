@@ -23,6 +23,7 @@
     "@swimlane/ngx-graph": "^6.1.0",
     "bootstrap": "^4.3.1",
     "bootstrap-material-design-icons": "^2.2.0",
+    "d3": "^5.11.0",
     "moment": "^2.24.0",
     "ngx-toastr": "^10.0.4",
     "ol": "^5.3.2",

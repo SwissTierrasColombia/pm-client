@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ManageServicesService } from 'src/app/services/m/manage-services.service';
 import { ParameterizationServicesService } from 'src/app/services/p/parameterization-services.service';
+//import { Node, Edge, ClusterNode } from '@swimlane/ngx-graph';
 
 @Component({
   selector: 'app-configuracion-proceso',
@@ -33,12 +34,16 @@ export class ConfiguracionProcesoComponent implements OnInit {
   userRoles: any;
   idUserRol: string;
   userRolesUpdate: any;
+  flowSteps: any;
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    /*     private node: Node,
+        private edge: Edge,
+        private clusterNode: ClusterNode */
   ) { }
 
   ngOnInit() {
@@ -96,6 +101,12 @@ export class ConfiguracionProcesoComponent implements OnInit {
         }
         console.log("this.usuarios: ", this.usuarios);
 
+      }
+    )
+    this.services.GetStepsFlow(this.idProcess).subscribe(
+      data => {
+        this.flowSteps = data;
+        console.log(this.flowSteps.nodes);
       }
     )
   }

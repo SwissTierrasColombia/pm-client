@@ -18,6 +18,7 @@ import { Typedata } from 'src/app/models/typedata';
 import { Callbacks } from 'src/app/models/callbacks';
 import { ErrorInterceptorService } from './services/error/error-interceptor.service';
 import { RolesComponent } from './pages/configuracion-steps/roles/roles.component';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { RolesComponent } from './pages/configuracion-steps/roles/roles.componen
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgxGraphModule
   ],
   providers: [
     Typedata,

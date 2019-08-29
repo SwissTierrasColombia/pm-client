@@ -127,6 +127,18 @@ export class ManageServicesService {
   public RemoveUserFromProcess(idProcess: string, idUser: string) {
     return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/users/' + idUser);
   }
+  /**
+   * Deploy Process
+   */
+  public DeployProcess(idProcess: string) {
+    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/deploy', {})
+  }
+  /**
+   * Get Steps Flow
+   */
+  public GetStepsFlow(idProcess: string) {
+    return this.httpClient.get<any>(this.url + '/api/m/processes/' + idProcess + '/flow')
+  }
 
   // FIN M/Processes
 
