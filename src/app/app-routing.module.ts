@@ -6,6 +6,7 @@ import { ProcesosComponent } from './pages/procesos/procesos.component';
 import { ConfiguracionProcesoComponent } from './pages/configuracion-proceso/configuracion-proceso.component';
 import { ConfiguracionStepsComponent } from './pages/configuracion-steps/configuracion-steps.component';
 import { RulesComponent } from './pages/configuracion-steps/rules/rules.component';
+import { RolesComponent } from './pages/configuracion-steps/roles/roles.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,13 @@ const routes: Routes = [
     component: RulesComponent,
     data: {
       title: 'Configuración de reglas'
+    }
+  },
+  {
+    path: 'procesos/:idProceso/step/:idStep/:nameStep/config/roles',
+    component: RolesComponent,
+    data: {
+      title: 'Configuración de roles'
     }
   },
   {

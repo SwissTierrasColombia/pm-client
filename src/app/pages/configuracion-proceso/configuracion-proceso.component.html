@@ -21,7 +21,7 @@
                 <li class="nav-item">
                     <a class="nav-link active cursor" data-toggle="tab" [ngClass]="{'active':tab === 2}" role="tab"
                         (click)="tab=2" aria-controls="roles">
-                        <i class="material-icons">supervised_user_circle</i>Roles
+                        <i class="material-icons">people_outline</i>Roles
                     </a>
                 </li>
                 <li class="nav-item">
@@ -47,6 +47,8 @@
                                 [ngClass]="{'btn-success':item.status == true, 'btn-secondary':!item.status }">
                                 {{item.step.step}}
                             </div>
+                            <i class="material-icons cursor m-1"
+                                (click)="configStepRoles(item.step._id, item.step.step, i)">people</i>
                             <i class="material-icons cursor m-1"
                                 (click)="configRules(item.step._id, item.step.step, i)">list_alt</i>
                             <i class="material-icons cursor m-1"

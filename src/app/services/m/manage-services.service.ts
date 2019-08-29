@@ -29,13 +29,13 @@ export class ManageServicesService {
    * Update a Process
    */
   public UpdateaProcess(ipProcess: string, data: any) {
-    return this.httpClient.put(this.url + '/api/m/processes/' + ipProcess, data)
+    return this.httpClient.put(this.url + '/api/m/processes/' + ipProcess, data);
   }
   /**
    * Remove a Process
    */
   public RemoveaProcess(idProcess: string) {
-    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess)
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess);
   }
   /**
   * Add role to process
@@ -59,7 +59,7 @@ export class ManageServicesService {
    * Remove Role From Process
    */
   public RemoveRoleFromProcess(idprocess: string, idrule: string) {
-    return this.httpClient.delete(this.url + '/api/m/processes/' + idprocess + '/roles/' + idrule)
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idprocess + '/roles/' + idrule);
   }
   /**
    * Add step to process
@@ -77,13 +77,13 @@ export class ManageServicesService {
    * Remove Step To Process
    */
   public RemoveStepToProcess(idProcess: string, stepsSelect: string) {
-    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/steps/' + stepsSelect)
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/steps/' + stepsSelect);
   }
   /**
    * Add variable to process
    */
   public AddVariableToProcess(idProcess: string, data: any) {
-    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/variables', data)
+    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/variables', data);
   }
   /**
    * Get Variables From Process
@@ -95,7 +95,7 @@ export class ManageServicesService {
    * Update Variables From Process
    */
   public UpdateVariablesFromProcess(idProcess: string, idVariable: string, data: any) {
-    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/variables/' + idVariable, data)
+    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/variables/' + idVariable, data);
   }
   /**
    * Remove Variable From Process
@@ -107,25 +107,25 @@ export class ManageServicesService {
    * Add Users To Process
    */
   public AddUsersToProcess(idProcess: string, data: any) {
-    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/users', data)
+    return this.httpClient.post(this.url + '/api/m/processes/' + idProcess + '/users', data);
   }
   /**
    * Get Users To Process
    */
   public GetUsersToProcess(idProcess: string) {
-    return this.httpClient.get<any>(this.url + '/api/m/processes/' + idProcess + '/users')
+    return this.httpClient.get<any>(this.url + '/api/m/processes/' + idProcess + '/users');
   }
   /**
    * Update User To Process
    */
   public UpdateUserToProcess(idProcess: string, idUser: string, data: any) {
-    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/users/' + idUser, data)
+    return this.httpClient.put(this.url + '/api/m/processes/' + idProcess + '/users/' + idUser, data);
   }
   /**
    * Remove User From Process
    */
   public RemoveUserFromProcess(idProcess: string, idUser: string) {
-    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/users/' + idUser)
+    return this.httpClient.delete(this.url + '/api/m/processes/' + idProcess + '/users/' + idUser);
   }
 
   // FIN M/Processes
@@ -146,7 +146,7 @@ export class ManageServicesService {
    * Get Fields From Step
    */
   public GetFieldsFromStep(idstep: string) {
-    return this.httpClient.get<any>(this.url + '/api/m/steps/' + idstep + '/fields')
+    return this.httpClient.get<any>(this.url + '/api/m/steps/' + idstep + '/fields');
   }
   /**
    * Update Field From Step
@@ -154,25 +154,37 @@ export class ManageServicesService {
   public UpdateFieldFromStep(idStep: string, idField: string, formData: any) {
     let data = formData
     //console.log("data: ", data);
-    return this.httpClient.put(this.url + '/api/m/steps/' + idStep + '/fields/' + idField, data)
+    return this.httpClient.put(this.url + '/api/m/steps/' + idStep + '/fields/' + idField, data);
   }
   /**
    * Remove Field From Step
    */
   public RemoveFieldFromStep(idStep: string, idField: string) {
-    return this.httpClient.delete(this.url + '/api/m/steps/' + idStep + '/fields/' + idField)
+    return this.httpClient.delete(this.url + '/api/m/steps/' + idStep + '/fields/' + idField);
   }
   /**
    * Add Rule To Step
    */
   public AddRuleToStep(idStep: string, data: any) {
-    return this.httpClient.post(this.url + '/api/m/steps/' + idStep + '/rules', data)
+    return this.httpClient.post(this.url + '/api/m/steps/' + idStep + '/rules', data);
   }
   /**
    * Remove rule to step
    */
   public RemoveRuleToStep(idStep: string, idRule: string) {
-    return this.httpClient.delete(this.url + '/api/m/steps/' + idStep + '/rules/' + idRule)
+    return this.httpClient.delete(this.url + '/api/m/steps/' + idStep + '/rules/' + idRule);
+  }
+  /**
+   * Add Role To Step
+   */
+  public AddRoleToStep(idStep: string, data: any) {
+    return this.httpClient.post(this.url + '/api/m/steps/' + idStep + '/roles', data);
+  }
+  /**
+   * Remove Role To Step
+   */
+  public RemoveRoleToStep(idStep: string, idRol: string) {
+    return this.httpClient.delete(this.url + '/api/m/steps/' + idStep + '/roles/' + idRol);
   }
   //FIN M/Steps
 }

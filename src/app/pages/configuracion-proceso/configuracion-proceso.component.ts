@@ -259,6 +259,15 @@ export class ConfiguracionProcesoComponent implements OnInit {
       });
     });
   }
+  configStepRoles(idStep: string, nameStep: string, id) {
+    console.log(this.stepsProcess[id]);
+    if (this.steps[id].status) {
+      //this.addstepsProcess2();
+      this.router.navigate(['procesos/' + this.idProcess + '/step/' + idStep + '/' + nameStep + '/config/roles']);
+    } else {
+      this.toastr.info("Al parecer no haz agregado este paso al proceso", "Por favor agregalo primero.")
+    }
+  }
   configStep(idStep: string, nameStep: string, id) {
     console.log(this.stepsProcess[id]);
     if (this.steps[id].status) {

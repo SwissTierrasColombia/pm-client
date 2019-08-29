@@ -17,6 +17,7 @@ import { RulesComponent } from './pages/configuracion-steps/rules/rules.componen
 import { Typedata } from 'src/app/models/typedata';
 import { Callbacks } from 'src/app/models/callbacks';
 import { ErrorInterceptorService } from './services/error/error-interceptor.service';
+import { RolesComponent } from './pages/configuracion-steps/roles/roles.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { ErrorInterceptorService } from './services/error/error-interceptor.serv
     ConfiguracionStepsComponent,
     P404Component,
     P500Component,
-    RulesComponent
+    RulesComponent,
+    RolesComponent
   ],
   imports: [
     BrowserModule,
