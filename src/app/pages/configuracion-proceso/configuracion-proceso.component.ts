@@ -99,14 +99,14 @@ export class ConfiguracionProcesoComponent implements OnInit {
             this.usuarios[i].roles[j].status = true;
           }
         }
-        console.log("this.usuarios: ", this.usuarios);
+        //console.log("this.usuarios: ", this.usuarios);
 
       }
     )
     this.services.GetStepsFlow(this.idProcess).subscribe(
       data => {
         this.flowSteps = data;
-        console.log(this.flowSteps.nodes);
+        //console.log(this.flowSteps.nodes);
       }
     )
   }
