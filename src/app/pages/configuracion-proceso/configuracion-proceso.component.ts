@@ -312,6 +312,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
           this.services.RemoveStepToProcess(this.idProcess, this.idStepSelect._id).subscribe(
             response => {
               this.toastr.success("Se a eliminado un Step");
+              this.getFlow();
             }
           );
         } else {
@@ -438,4 +439,25 @@ export class ConfiguracionProcesoComponent implements OnInit {
     )
 
   }
+  getRoles() {
+    this.services.GetRolesProcess(this.idProcess).subscribe(
+      response => {
+        this.roles = response;
+        this.userRoles = this.clone(this.roles)
+        for (let i in this.userRoles) {
+          this.userRoles[i].status = false;
+        }
+        //console.log("this.roles: ", this.roles);
+      }
+    );
+  }
+  getFlow() {
+    this.services.GetStepsFlow(this.idProcess).subscribe(
+      data => {
+        this.flowSteps = data;
+        //console.log(this.flowSteps.nodes);
+      }
+    )
+  }
+
 }

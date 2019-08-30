@@ -209,10 +209,11 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Siguiente paso: </span>
                                             </div>
+                                            <!-- {{call.metadata.step | json}} -->
                                             <select class="form-control" id="paso{{idOut}}{{idInt}}"
                                                 name="paso{{idOut}}{{idInt}}" [(ngModel)]="call.metadata.step">
-                                                <option *ngFor="let item of allstepsSelect" name="item.typeStep._id"
-                                                    [ngValue]="item.typeStep._id">
+                                                <option *ngFor="let item of allstepsSelect" name="item._id"
+                                                    [ngValue]="item._id">
                                                     {{item._id!=idStepSelect._id ? item.typeStep.step : null }}
                                                 </option>
                                             </select>

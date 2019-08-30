@@ -32,7 +32,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active cursor" data-toggle="tab" [ngClass]="{'active':tab === 4}" role="tab"
-                        (click)="tab=4" aria-controls="usuarios">
+                        (click)="tab=4; getRoles()" aria-controls="usuarios">
                         <i class="material-icons">person_add</i>Registrar Usuarios
                     </a>
                 </li>
@@ -53,7 +53,8 @@
                                 (click)="configRules(item.step._id, item.step.step, i)">list_alt</i>
                             <i class="material-icons cursor m-1"
                                 (click)="configStep(item.step._id, item.step.step, i)">settings</i>
-                            <i class="material-icons cursor m-1" (click)="deleteStep(item.step._id, i)">delete</i>
+                            <i class="material-icons cursor m-1"
+                                (click)="deleteStep(item.step._id, i)">delete</i>
                         </div>
                     </div>
                     <div class="row justify-content-center mt-2">
@@ -326,8 +327,8 @@
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-12">
-                            <ngx-graph class="chart-container" [view]="[1000,1000]" [links]="flowSteps.links" [nodes]="flowSteps.nodes"
-                                layout="dagreCluster">
+                            <ngx-graph class="chart-container" [view]="[1000,1000]" [links]="flowSteps.links"
+                                [nodes]="flowSteps.nodes" layout="dagreCluster">
                                 <ng-template #nodeTemplate let-node>
                                     <svg:g class="node" ngx-tooltip>
                                         <svg:rect [attr.width]="node.dimension.width"

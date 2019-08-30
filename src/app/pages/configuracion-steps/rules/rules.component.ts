@@ -53,7 +53,7 @@ export class RulesComponent implements OnInit {
       this.services.GetStepsProcess(this.idProcess).subscribe(
         response => {
           this.allstepsSelect = response;
-          //console.log("this.allstepsSelect: ", this.allstepsSelect);
+          console.log("this.allstepsSelect: ", this.allstepsSelect);
           this.idStepSelect = this.allstepsSelect.find((item) => {
             return item.typeStep._id == this.idStep;
           })
