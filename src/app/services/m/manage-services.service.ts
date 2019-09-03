@@ -198,5 +198,11 @@ export class ManageServicesService {
   public RemoveRoleToStep(idStep: string, idRol: string) {
     return this.httpClient.delete(this.url + '/api/m/steps/' + idStep + '/roles/' + idRol);
   }
+  /**
+   * Set Origin Step
+   */
+  public SetOriginStep(idStep: string) {
+    return this.httpClient.put(this.url + '/api/m/steps/' + idStep + '/origin', {})
+  }
   //FIN M/Steps
 }

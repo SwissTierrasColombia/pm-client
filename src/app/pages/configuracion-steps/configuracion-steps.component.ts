@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ManageServicesService } from 'src/app/services/m/manage-services.service';
 import { ParameterizationServicesService } from 'src/app/services/p/parameterization-services.service';
+import { TypeDataFieldModel } from 'src/app/models/typeDataField.model';
 
 @Component({
   selector: 'app-configuracion-steps',
@@ -10,7 +11,6 @@ import { ParameterizationServicesService } from 'src/app/services/p/parameteriza
   styleUrls: ['./configuracion-steps.component.scss']
 })
 export class ConfiguracionStepsComponent implements OnInit {
-
   idProcess: any;
   idStep: any;
   idStepSelect: any;
@@ -20,13 +20,18 @@ export class ConfiguracionStepsComponent implements OnInit {
   permissions = [];
   typedata: any;
   allstepsSelect: any;
-
+  options = []
+  optionsMultiple = []
+  optionsCasilla = []
+  option: string;
+  optionMulti: string;
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public typeDataFieldModel: TypeDataFieldModel
   ) { }
 
   ngOnInit() {
@@ -61,6 +66,7 @@ export class ConfiguracionStepsComponent implements OnInit {
 
                 this.formStepProcess = aux;
                 for (let i in this.formStepProcess) {
+                  //this.formStepProcess[i].metadata.options = []
                   this.formStepProcess[i].type = this.formStepProcess[i].typeData._id;
                 }
                 resolve()
@@ -90,6 +96,7 @@ export class ConfiguracionStepsComponent implements OnInit {
             })
           }
           for (let i in this.formStepProcess) {
+            //this.formStepProcess[i].metadata.options = []
             for (let y in this.formStepProcess[i].permissions) {
               this.formStepProcess[i].permissions[y].nameRole = this.roles[y].role
             }
@@ -104,6 +111,9 @@ export class ConfiguracionStepsComponent implements OnInit {
 
   createFieldStepProcess() {
     this.formStepProcess.push({
+      "metadata": {
+        "options": []
+      },
       "permissions": this.clone(this.permissions)
     })
   }
@@ -121,6 +131,7 @@ export class ConfiguracionStepsComponent implements OnInit {
     this.formStepProcess[id].permissions[idtable][name] = !this.formStepProcess[id].permissions[idtable][name];
   }
   registerFieldStep() {
+
     let dataForm = this.clone(this.formStepProcess)
     let promise = [];
     for (let i in dataForm) {
@@ -150,6 +161,38 @@ export class ConfiguracionStepsComponent implements OnInit {
       this.toastr.success("Información guardada.");
     });
 
+  }
+  AddList(count: number) {
+    this.options = this.formStepProcess[count].metadata.options;
+    this.options.push(this.option);
+    this.formStepProcess[count].metadata.options = this.options;
+  }
+  AddListMultiple(count: number) {
+    this.optionsMultiple = this.formStepProcess[count].metadata.options;
+    this.optionsMultiple.push(this.optionMulti);
+    this.formStepProcess[count].metadata.options = this.optionsMultiple;
+  }
+  deleteList(count: number) {
+    this.options = this.formStepProcess[count].metadata.options;
+    let aux = [];
+    for (let i of this.options) {
+      aux = this.options.filter(item => {
+        return item != i;
+      })
+    }
+    this.options = aux;
+    this.formStepProcess[count].metadata.options = aux
+  }
+  deleteListMultiple(count: number) {
+    this.optionsMultiple = this.formStepProcess[count].metadata.options;
+    let aux = [];
+    for (let i of this.options) {
+      aux = this.options.filter(item => {
+        return item != i;
+      })
+    }
+    this.options = aux;
+    this.formStepProcess[count].metadata.options = aux
   }
   volver() {
     this.router.navigate(['procesos/' + this.idProcess + '/configuracion/']);

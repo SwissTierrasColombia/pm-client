@@ -4,8 +4,8 @@ import { ParameterizationServicesService } from 'src/app/services/p/parameteriza
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GetTypesCallback, TypeData } from '../../../interface/get-types-callback';
-import { Typedata } from 'src/app/models/typedata';
 import { Callbacks } from 'src/app/models/callbacks';
+import { TypeDataFieldModel } from 'src/app/models/typeDataField.model';
 
 @Component({
   selector: 'app-rules',
@@ -30,8 +30,8 @@ export class RulesComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    public typedata: Typedata,
-    public callbacks: Callbacks
+    public callbacks: Callbacks,
+    public typeDataFieldModel: TypeDataFieldModel
   ) { }
 
   ngOnInit() {
@@ -142,7 +142,7 @@ export class RulesComponent implements OnInit {
   deleteCallback(idOut: number, idin: number) {
     this.formRulesStepProcess[idOut].callbacks.splice(idin, 1);
   }
-  modelChanged(idfiel, idOut, idInt) {
+  modelChanged(idfiel, idOut, idInt, item) {
     //console.log("this.allFieldStep: ", this.allFieldStep);
 
     let aux = this.allFieldStep.find((item) => {
@@ -150,26 +150,40 @@ export class RulesComponent implements OnInit {
     })
     //console.log(aux.typeData._id);
 
-    if (aux.typeData._id === this.typedata.CorreoElectronico) {
-      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.CorreoElectronico
-      //console.log("correo");
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataCheckbox) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataCheckbox
     }
-    if (aux.typeData._id === this.typedata.Fecha) {
-      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.Fecha
-      //console.log("fecha");
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataDate) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataDate
 
     }
-    if (aux.typeData._id === this.typedata.Numerico) {
-      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.Numerico
-      //console.log("numerico");
-
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataEmail) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataEmail
     }
-    if (aux.typeData._id === this.typedata.Texto) {
-      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typedata.Texto
-      //console.log("text");
-
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataFile) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataFile
     }
-
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataMultipleResponseList) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataMultipleResponseList
+    }
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataNumber) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataNumber
+    }
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataPhoneNumber) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataPhoneNumber
+    }
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataSingleResponseList) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataSingleResponseList
+    }
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataSingleResponseList) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataSingleResponseList
+    }
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataText) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataText
+    }
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataTextarea) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataTextarea
+    }
   }
   CreateRule() {
     let data = this.clone(this.formRulesStepProcess)

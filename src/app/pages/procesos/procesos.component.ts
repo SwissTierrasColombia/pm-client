@@ -78,5 +78,12 @@ export class ProcesosComponent implements OnInit {
         this.process.splice(id, 1);
       });
   }
+  Deploy(idProcess: string) {
+    this.services.DeployProcess(idProcess).subscribe(
+      data => {
+        this.toastr.success("El proceso ha quedado activado")
+      }
+    )
+  }
 
 }

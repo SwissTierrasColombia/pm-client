@@ -14,11 +14,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { RulesComponent } from './pages/configuracion-steps/rules/rules.component';
-import { Typedata } from 'src/app/models/typedata';
 import { Callbacks } from 'src/app/models/callbacks';
 import { ErrorInterceptorService } from './services/error/error-interceptor.service';
 import { RolesComponent } from './pages/configuracion-steps/roles/roles.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { TypeDataFieldModel } from './models/typeDataField.model';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,11 +40,12 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgxGraphModule
+    NgxGraphModule,
+    NgbModule
   ],
   providers: [
-    Typedata,
     Callbacks,
+    TypeDataFieldModel,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]

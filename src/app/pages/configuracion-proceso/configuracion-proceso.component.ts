@@ -35,6 +35,7 @@ export class ConfiguracionProcesoComponent implements OnInit {
   idUserRol: string;
   userRolesUpdate: any;
   flowSteps: any;
+  firstStep = false;
   constructor(
     private services: ManageServicesService,
     private servicesp: ParameterizationServicesService,
@@ -57,7 +58,8 @@ export class ConfiguracionProcesoComponent implements OnInit {
         for (let i in response) {
           this.steps.push({
             "step": response[i],
-            "status": false
+            "status": false,
+            "isFirst": false
           })
         }
       }
@@ -84,6 +86,16 @@ export class ConfiguracionProcesoComponent implements OnInit {
             variable.status = true;
           }
           return variable
+        });
+        this.stepsProcess.forEach(item => {
+          //console.log("item: ", item);
+          if (item.isFirst) {
+            this.steps.find(elem => {
+              if (item.typeStep._id == elem.step._id) {
+                return elem.isFirst = true;
+              }
+            });
+          }
         });
       });
     this.services.GetVariablesFromProcess(this.idProcess).subscribe(
@@ -458,6 +470,30 @@ export class ConfiguracionProcesoComponent implements OnInit {
         //console.log(this.flowSteps.nodes);
       }
     )
+  }
+  firstOrigin(idStep: string, name: string) {
+    this.idStepSelect = this.stepsProcess.find((item) => {
+      return item.typeStep._id == idStep;
+    });
+    if (this.idStepSelect) {
+      this.idStepSelect.isFirst = !this.idStepSelect.isFirst;
+      for (let i in this.steps) {
+        //console.log(this.steps[i])
+        if (this.steps[i].step._id == idStep) {
+          this.steps[i].isFirst = this.idStepSelect.isFirst;
+        }
+      }
+      this.services.SetOriginStep(this.idStepSelect._id).subscribe(
+        data => {
+          console.log("data: ", data);
+          this.toastr.success(name, "Haz cambiando el step de origen a:")
+          setTimeout(function () { window.location.reload(); }, 1000);
+        });
+    } else {
+      this.toastr.show("Por favor primero agrega el step")
+    }
+    //console.log("idStepSelect: ", this.idStepSelect);
+
   }
 
 }

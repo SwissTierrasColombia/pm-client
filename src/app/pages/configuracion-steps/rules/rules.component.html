@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="card-body" *ngIf="formRulesStepProcess">
-        <!-- {{formRulesStepProcess | json}} -->
+        {{formRulesStepProcess | json}}
         <form action="" method="post">
             <div class="form-group">
                 <div class="row m-1" *ngFor="let form of formRulesStepProcess; let idOut = index;">
@@ -36,11 +36,12 @@
                         </div>
                         <!-- {{form | json}} -->
                         <div class="row m-1" *ngFor="let item of form.conditions; let idInt = index;">
-                            <!-- {{item | json}}  -->
+                            <!-- {{item | json}} -->
                             <div class="col-1">
                                 <button class="btn btn-danger" type="submit"
                                     (click)="deleteConditions(idOut,idInt)">-</button>
                             </div>
+                            {{allFieldStep | json}}
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -48,7 +49,7 @@
                                     </div>
                                     <select class="form-control" id="typeData{{idOut}}{{idInt}}"
                                         name="typeData{{idOut}}{{idInt}}" [(ngModel)]="item.field"
-                                        (ngModelChange)="modelChanged(item.field,idOut,idInt )">
+                                        (ngModelChange)="modelChanged(item.field,idOut,idInt)">
                                         <option *ngFor="let fiel of allFieldStep" name="fiel._id" [ngValue]="fiel._id">
                                             {{fiel.nameField}}
                                         </option>
@@ -70,49 +71,96 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3" *ngIf="item && typedata.Texto === item.typeData">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Valor: </span>
+                            <div [ngSwitch]="item.typeData">
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataText">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Valor: </span>
+                                        </div>
+                                        <input class="form-control" id="valor{{idOut}}{{idInt}}" type="text"
+                                            name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                     </div>
-                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="text"
-                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                 </div>
-                            </div>
-                            <div class="col-sm-3" *ngIf="item && typedata.Numerico === item.typeData">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Valor: </span>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataNumber">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Valor: </span>
+                                        </div>
+                                        <input class="form-control" id="valor{{idOut}}{{idInt}}" type="number"
+                                            name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                     </div>
-                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="number"
-                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                 </div>
-                            </div>
-                            <div class="col-sm-3" *ngIf=" item && typedata.CorreoElectronico === item.typeData">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Valor: </span>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataEmail">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Valor: </span>
+                                        </div>
+                                        <input class="form-control" id="valor{{idOut}}{{idInt}}" type="email"
+                                            name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                     </div>
-                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="email"
-                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                 </div>
-                            </div>
-                            <div class="col-sm-3" *ngIf="item && typedata.NumeroCelular === item.typeData">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Valor: </span>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataPhoneNumber">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Valor: </span>
+                                        </div>
+                                        <input class="form-control" id="valor{{idOut}}{{idInt}}" type="number"
+                                            name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                     </div>
-                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="number"
-                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                 </div>
-                            </div>
-                            <div class="col-sm-3" *ngIf="item && typedata.Fecha === item.typeData">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Valor: </span>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataDate">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Valor: </span>
+                                        </div>
+                                        <input class="form-control" id="valor{{idOut}}{{idInt}}" type="date"
+                                            name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
                                     </div>
-                                    <input class="form-control" id="valor{{idOut}}{{idInt}}" type="date"
-                                        name="valor{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                                </div>
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataSingleResponseList">
+                                    <select class="form-control" name="r_data_{{item.field}}" [(ngModel)]="item.value">
+                                        <option *ngFor="let option of item.metadata.options;let i = index"
+                                            value="{{i}}">{{option}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataMultipleResponseList">
+                                    <select multiple class="form-control" name="r_data_{{item.field}}"
+                                        [(ngModel)]="item.value">
+                                        <option *ngFor="let option of item.metadata.options;let i = index"
+                                            value="{{i}}">{{option}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataCheckbox">
+                                    <select class="form-control" id="requerido{{idOut}}{{idInt}}"
+                                        name="requerido{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                                        <option name="item" [ngValue]="true">
+                                            Verdadero
+                                        </option>
+                                        <option name="item" [ngValue]="false">
+                                            Falso
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataTextarea">
+                                    <textarea class="form-control" rows="2" name="r_data_{{item.field}}"
+                                        [(ngModel)]="item.value"></textarea>
+                                </div>
+
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataFile">
+                                    <input type="file" class="form-control-file">
+                                </div>
+
+                                <div *ngSwitchDefault>
+                                    <h5>No hay ningún campo seleccionado</h5>
                                 </div>
                             </div>
                         </div>
