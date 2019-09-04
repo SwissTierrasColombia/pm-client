@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="card-body" *ngIf="formRulesStepProcess">
-        {{formRulesStepProcess | json}}
+        <!-- {{formRulesStepProcess | json}} -->
         <form action="" method="post">
             <div class="form-group">
                 <div class="row m-1" *ngFor="let form of formRulesStepProcess; let idOut = index;">
@@ -41,7 +41,7 @@
                                 <button class="btn btn-danger" type="submit"
                                     (click)="deleteConditions(idOut,idInt)">-</button>
                             </div>
-                            {{allFieldStep | json}}
+                            <!-- {{allFieldStep | json}} -->
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -123,8 +123,8 @@
                                 </div>
                                 <div *ngSwitchCase="typeDataFieldModel.typeDataSingleResponseList">
                                     <select class="form-control" name="r_data_{{item.field}}" [(ngModel)]="item.value">
-                                        <option *ngFor="let option of item.metadata.options;let i = index"
-                                            value="{{i}}">{{option}}
+                                        <option *ngFor="let option of item.metadata.options" [ngValue]="option">
+                                            {{option}}
                                         </option>
                                     </select>
                                 </div>
@@ -132,8 +132,8 @@
                                 <div *ngSwitchCase="typeDataFieldModel.typeDataMultipleResponseList">
                                     <select multiple class="form-control" name="r_data_{{item.field}}"
                                         [(ngModel)]="item.value">
-                                        <option *ngFor="let option of item.metadata.options;let i = index"
-                                            value="{{i}}">{{option}}
+                                        <option *ngFor="let option of item.metadata.options" [ngValue]="option">
+                                            {{option}}
                                         </option>
                                     </select>
                                 </div>
@@ -156,7 +156,16 @@
                                 </div>
 
                                 <div *ngSwitchCase="typeDataFieldModel.typeDataFile">
-                                    <input type="file" class="form-control-file">
+                                    <input type="file" class="form-control-file" [(ngModel)]="item.value">
+                                </div>
+                                <div *ngSwitchCase="typeDataFieldModel.typeDataUrl">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">URL: </span>
+                                        </div>
+                                        <input class="form-control" id="url{{idOut}}{{idInt}}" type="url"
+                                            name="url{{idOut}}{{idInt}}" [(ngModel)]="item.value">
+                                    </div>
                                 </div>
 
                                 <div *ngSwitchDefault>

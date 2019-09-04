@@ -13,6 +13,7 @@ export class TypeDataFieldModel {
     public typeDataCheckbox: string;
     public typeDataFile: string;
     public typeDataTextarea: string;
+    public typeDataUrl: string;
 
     constructor() {
         this.typeDataText = '5d519eb247943f3539d116ef';
@@ -25,6 +26,7 @@ export class TypeDataFieldModel {
         this.typeDataCheckbox = '5d6d158e15ba903fa8b8b5f5';
         this.typeDataFile = '5d6d20ef775e54cab6e1a7c3';
         this.typeDataTextarea = '5d6d41ebd3bc60802d460fcf';
+        this.typeDataUrl = '5d6e64250b353073ccfa2d89';
     }
 
 }

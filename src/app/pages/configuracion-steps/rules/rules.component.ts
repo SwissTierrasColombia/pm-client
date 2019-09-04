@@ -23,6 +23,7 @@ export class RulesComponent implements OnInit {
   allstepsSelect: any;
   allCallback: GetTypesCallback;
   steps = [];
+  changeStepAux: any;
 
   constructor(
     private services: ManageServicesService,
@@ -79,7 +80,11 @@ export class RulesComponent implements OnInit {
         this.formRulesStepProcess = [
           {
             "conditions": [
-              {}
+              {
+                "metadata": {
+                  "options": []
+                }
+              }
             ],
             "callbacks": [
               {
@@ -110,7 +115,11 @@ export class RulesComponent implements OnInit {
   addNewRule() {
     this.formRulesStepProcess.push({
       "conditions": [
-        {}
+        {
+          "metadata": {
+            "options": []
+          }
+        }
       ],
       "callbacks": [
         {
@@ -120,7 +129,11 @@ export class RulesComponent implements OnInit {
     });
   }
   addNewConditions(idOut: number) {
-    this.formRulesStepProcess[idOut].conditions.push({});
+    this.formRulesStepProcess[idOut].conditions.push({
+      "metadata": {
+        "options": []
+      }
+    });
   }
   addNewCallback(idOut: number) {
     this.formRulesStepProcess[idOut].callbacks.push({ 'metadata': {} });
@@ -143,12 +156,19 @@ export class RulesComponent implements OnInit {
     this.formRulesStepProcess[idOut].callbacks.splice(idin, 1);
   }
   modelChanged(idfiel, idOut, idInt, item) {
-    //console.log("this.allFieldStep: ", this.allFieldStep);
-
+    this.formRulesStepProcess[idOut].conditions[idInt].metadata.options = []
     let aux = this.allFieldStep.find((item) => {
       return item._id == idfiel;
     })
-    //console.log(aux.typeData._id);
+    if (aux.metadata) {
+      aux.metadata.options.forEach(element => {
+        this.formRulesStepProcess[idOut].conditions[idInt].metadata.options.push(element);
+      });
+    }
+    //console.log(this.formRulesStepProcess[idOut].conditions[idInt]);
+
+    //console.log(element);
+
 
     if (aux.typeData._id === this.typeDataFieldModel.typeDataCheckbox) {
       this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataCheckbox
@@ -183,6 +203,9 @@ export class RulesComponent implements OnInit {
     }
     if (aux.typeData._id === this.typeDataFieldModel.typeDataTextarea) {
       this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataTextarea
+    }
+    if (aux.typeData._id === this.typeDataFieldModel.typeDataUrl) {
+      this.formRulesStepProcess[idOut].conditions[idInt].typeData = this.typeDataFieldModel.typeDataUrl
     }
   }
   CreateRule() {
