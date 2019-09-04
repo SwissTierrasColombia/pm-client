@@ -211,6 +211,21 @@ export class RulesComponent implements OnInit {
   CreateRule() {
     let data = this.clone(this.formRulesStepProcess)
     for (let i in data) {
+      for (let j in data[i].conditions) {
+        if (data[i].conditions[j].hasOwnProperty('metadata')) {
+          if (typeof (data[i].conditions[j].value) == 'object') {
+            data[i].conditions[j].value = data[i].conditions[j].value.join()
+            console.log(data[i].conditions[j].value);
+
+          } else if (typeof (data[i].conditions[j].value) == 'number') {
+            data[i].conditions[j].value = JSON.stringify(data[i].conditions[j].value)
+            console.log(data[i].conditions[j].value);
+          }
+
+        }
+      }
+    }
+    for (let i in data) {
       this.services.AddRuleToStep(this.idStepSelect._id, data[i]).subscribe(
         response => {
           this.toastr.success("Se han registrado las reglas")
